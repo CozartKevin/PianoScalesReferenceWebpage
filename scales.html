@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Piano Keyboards</title>
+    <style>
+        /* Keyboard Styles */
+        .keyboard {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .key {
+            width: 30px;
+            height: 120px;
+            border: 1px solid #888888;
+            position: relative;
+        }
+
+        .white-key {
+            background-color: white;
+        }
+
+        .black-key {
+            background-color: black;
+            width: 20px;
+            height: 80px;
+            position: absolute;
+            z-index: 1;
+            top: 0;
+        }
+
+        /* Scale Highlights */
+        .highlight {
+            background-color: yellow;
+        }
+
+        .highlight-black {
+            background-color: #666600;
+        }
+    </style>
+</head>
+<body>
+    <h1>Piano Keyboards</h1>
+
+    <h2>C Major Scale</h2>
+    <div class="keyboard">
+        <div class="key white-key"></div>
+        <div class="key black-key"></div>
+        <div class="key white-key highlight"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+        <div class="key white-key highlight"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+        <div class="key black-key"></div>
+        <div class="key white-key highlight"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+        <div class="key white-key highlight"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+    </div>
+
+    <h2>G Major Scale</h2>
+    <div class="keyboard">
+        <div class="key white-key"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+        <div class="key white-key"></div>
+        <div class="key black-key"></div>
+        <div class="key white-key highlight"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+        <div class="key white-key"></div>
+        <div class="key black-key"></div>
+        <div class="key white-key highlight"></div>
+        <div class="key black-key highlight-black"></div>
+        <div class="key white-key"></div>
+    </div>
+</body>
+</html>

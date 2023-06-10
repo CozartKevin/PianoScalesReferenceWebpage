@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Piano Scales</title>
+  <style>
+    /* CSS code for piano keyboard */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .keyboard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .white-key {
+      width: 40px;
+      height: 200px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      margin-right: 2px;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .black-key {
+      width: 25px;
+      height: 120px;
+      background-color: black;
+      border: 1px solid #333;
+      border-radius: 2px;
+      margin-left: -13px;
+      margin-right: -13px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .scale-highlight {
+      background-color: yellow;
+    }
+
+    .scale-highlight-right {
+      background-color: lime;
+    }
+
+    /* CSS code for musical notation */
+    .notation {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    /* CSS code for fingering */
+    .fingering {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* CSS code for responsiveness */
+    @media screen and (max-width: 600px) {
+      .white-key {
+        width: 30px;
+        height: 150px;
+      }
+
+      .black-key {
+        width: 20px;
+        height: 90px;
+        margin-left: -10px;
+        margin-right: -10px;
+      }
+
+      .notation {
+        font-size: 18px;
+      }
+
+      .fingering {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="keyboard">
+      <div class="row">
+        <div class="white-key" id="C"></div>
+        <div class="black-key" id="C#"></div>
+        <div class="white-key" id="D"></div>
+        <div class="black-key" id="D#"></div>
+        <div class="white-key" id="E"></div>
+        <div class="white-key" id="F"></div>
+        <div class="black-key" id="F#"></div>
+        <div class="white-key" id="G"></div>
+        <div class="black-key" id="G#"></div>
+        <div class="white-key" id="A"></div>
+        <div class="black-key" id="A#"></div>
+        <div class="white-key" id="B"></div>
+        <div class="white-key" id="C2"></div>
+        <div class="black-key" id="C#2"></div>
+        <div class="white-key" id="D2"></div>
+        <div class="black-key" id="D#2"></div>
+        <div class="white-key" id="E2"></div>
+        <div class="white-key" id="F2"></div>
+        <div class="black-key" id="F#2"></div>
+        <div class="white-key" id="G2"></div>
+        <div class="black-key" id="G#2"></div>
+        <div class="white-key" id="A2"></div>
+        <div class="black-key" id="A#2"></div>
+        <div class="white-key" id="B2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notation" id="scale-notation"></div>
+  <div class="fingering" id="scale-fingering"></div>
+
+  <script>
+    // JavaScript code for highlighting keys, generating musical notation, and fingering
+    // ... (your code goes here)
+  </script>
+</body>
+</html>

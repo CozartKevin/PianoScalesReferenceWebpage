@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Piano Keyboard</title>
+  <style>
+    /* CSS code for piano keyboard */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .keyboard {
+      display: flex;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .white-key {
+      width: 40px;
+      height: 200px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      margin-right: 2px;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .black-key {
+      width: 25px;
+      height: 120px;
+      background-color: black;
+      border: 1px solid #333;
+      border-radius: 2px;
+      margin-left: -13px;
+      margin-right: -13px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .scale-highlight {
+      background-color: yellow;
+    }
+
+    /* CSS code for responsiveness */
+    @media screen and (max-width: 600px) {
+      .white-key {
+        width: 30px;
+        height: 150px;
+      }
+
+      .black-key {
+        width: 20px;
+        height: 90px;
+        margin-left: -10px;
+        margin-right: -10px;
+      }
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="keyboard" id="piano-keyboard">
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code for generating the piano keyboard
+    function generatePianoKeyboard(startingNote, keysPerOctave) {
+      const keyboard = document.getElementById("piano-keyboard");
+      const noteMap = {
+        "C": 0,
+        "C#": 1,
+        "Db": 1,
+        "D": 2,
+        "D#": 3,
+        "Eb": 3,
+        "E": 4,
+        "F": 5,
+        "F#": 6,
+        "Gb": 6,
+        "G": 7,
+        "G#": 8,
+        "Ab": 8,
+        "A": 9,
+        "A#": 10,
+        "Bb": 10,
+        "B": 11
+      };
+
+      const startingNoteIndex = noteMap[startingNote];
+      let noteIndex = startingNoteIndex;
+
+      while (keyboard.children.length < keysPerOctave) {
+        const note = getNoteByIndex(noteIndex);
+
+        const key = document.createElement("div");
+        key.className = isBlackKey(note) ? "black-key" : "white-key";
+        key.id = note;
+        keyboard.appendChild(key);
+
+        noteIndex = (noteIndex + 1) % 12;
+      }
+    }
+
+    // Function to highlight the scale keys
+    function highlightScale(scaleNotes) {
+      const keyboard = document.querySelector(".keyboard");
+
+      scaleNotes.forEach((note) => {
+        const key = document.getElementById(note);
+        if (key) {
+          key.classList.add("scale-highlight");
+        }
+      });
+    }
+
+    // Generate the scale notes
+    function generateScaleNotes(startingNote, intervals) {
+      const noteMap = {
+        "C": 0,
+        "C#": 1,
+        "Db": 1,
+        "D": 2,
+        "D#": 3,
+        "Eb": 3,
+        "E": 4,
+        "F": 5,
+        "F#": 6,
+        "Gb": 6,
+        "G": 7,
+        "G#": 8,
+        "Ab": 8,
+        "A": 9,
+        "A#": 10,
+        "Bb": 10,
+        "B": 11
+      };
+
+      const startingNoteIndex = noteMap[startingNote];
+      let noteIndex = startingNoteIndex;
+      const scaleNotes = [startingNote];
+
+      intervals.forEach((interval) => {
+        noteIndex = (noteIndex + interval) % 12;
+        scaleNotes.push(getNoteByIndex(noteIndex));
+      });
+
+      return scaleNotes;
+    }
+
+    // Generate the piano keyboard starting from note G with 13 keys per octave
+    const startingNote = "C";
+    const keysPerOctave = 13;
+
+    generatePianoKeyboard(startingNote, keysPerOctave);
+
+    // Define the intervals for the major scale
+    const scaleIntervals = {
+      "major": [2, 2, 1, 2, 2, 2, 1]
+    };
+
+    // Generate the scale notes and highlight the scale keys
+    const selectedScale = "major";
+    const intervals = scaleIntervals[selectedScale];
+    const scaleNotes = generateScaleNotes(startingNote, intervals);
+    highlightScale(scaleNotes);
+
+    function getNoteByIndex(noteIndex) {
+      const noteMap = {
+        0: "C",
+        1: "C#",
+        2: "D",
+        3: "D#",
+        4: "E",
+        5: "F",
+        6: "F#",
+        7: "G",
+        8: "G#",
+        9: "A",
+        10: "A#",
+        11: "B"
+      };
+
+      return noteMap[noteIndex];
+    }
+
+    function isBlackKey(note) {
+      return note.includes("#") || note.includes("b");
+    }
+  </script>
+</body>
+</html>

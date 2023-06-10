@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Piano Keyboard</title>
+  <style>
+    /* CSS code for piano keyboard */
+    :root {
+      --white-key-width: calc(40px * 1.06);
+      --white-key-height: calc(200px * 1.06);
+      --black-key-width: calc(25px * 1.06);
+      --black-key-height: calc(120px * 1.06);
+      --note-label-font-size: calc(12px * 1.06);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .keyboard {
+      display: flex;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .white-key {
+      width: var(--white-key-width);
+      height: var(--white-key-height);
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      margin-right: 2px;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .black-key {
+      width: var(--black-key-width);
+      height: var(--black-key-height);
+      background-color: black;
+      border: 1px solid #333;
+      border-radius: 2px;
+      margin-left: -13px;
+      margin-right: -13px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .scale-highlight {
+      background-color: yellow;
+    }
+
+    .note-label {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: black;
+      font-size: var(--note-label-font-size);
+      visibility: hidden;
+    }
+
+    .scale-highlight .note-label {
+      visibility: visible;
+    }
+
+
+    /* CSS code for responsiveness */
+    @media screen and (max-width: 600px) {
+      .white-key {
+        width: 30px;
+        height: 150px;
+      }
+
+      .black-key {
+        width: 20px;
+        height: 90px;
+        margin-left: -10px;
+        margin-right: -10px;
+      }
+
+      .note-label {
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="keyboard" id="keyboard"></div>
+  </div>
+
+  <script>
+    function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
+      const keyboard = document.getElementById("keyboard");
+
+      const scaleNotes = generateScaleNotes(startingNote, scaleType);
+      const notesInOctave = generateScaleNotes(startingNote, "chromatic");
+
+      while (keyboard.children.length < keysPerOctave + 1) {
+        const row = document.createElement("div");
+        row.className = "row";
+
+        for (let i = 0; i < notesInOctave.length; i++) {
+          const note = notesInOctave[i];
+          const isSharp = note.includes("#") || note.includes("♯");
+
+          const key = document.createElement("div");
+          key.className = isSharp ? "black-key" : "white-key";
+          key.id = note;
+
+          const noteLabel = document.createElement("div");
+          noteLabel.className = "note-label";
+          noteLabel.textContent = note.replace("#", "♯");
+          key.appendChild(noteLabel);
+
+          row.appendChild(key);
+        }
+
+        keyboard.appendChild(row);
+      }
+
+      highlightScale(scaleNotes);
+    }
+
+    function generateScaleNotes(startingNote, scaleType) {
+      // ... existing code ...
+
+      // Duplicate the starting note at the end
+      scaleNotes.push(scaleNotes[0]);
+
+      return scaleNotes;
+    }
+
+    function highlightScale(scaleNotes) {
+      const keys = document.getElementsByClassName("white-key");
+      const blackKeys = document.getElementsByClassName("black-key");
+
+      // Remove existing scale highlights
+      for (let i = 0; i < keys.length; i++) {
+        keys[i].classList.remove("scale-highlight");
+      }
+
+      for (let i = 0; i < blackKeys.length; i++) {
+        blackKeys[i].classList.remove("scale-highlight");
+      }
+
+      // Highlight scale notes
+      for (let i = 0; i < scaleNotes.length; i++) {
+        const note = scaleNotes[i];
+        const key = document.getElementById(note);
+        if (key) {
+          key.classList.add("scale-highlight");
+        }
+      }
+    }
+
+    generatePianoKeyboard("C", 13, "major");
+  </script>
+</body>
+</html>
