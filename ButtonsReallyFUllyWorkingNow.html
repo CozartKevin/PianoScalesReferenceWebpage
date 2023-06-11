@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Piano Keyboard</title>
+  <style>
+    /* CSS code for piano keyboard */
+    :root {
+      --white-key-width: calc(40px * 1.5);
+      --white-key-height: calc(200px * 1.5);
+      --black-key-width: calc(25px * 1.5);
+      --black-key-height: calc(120px * 1.5);
+      --note-label-font-size: calc(12px * 1.5);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .keyboard {
+      display: flex;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .white-key {
+      width: var(--white-key-width);
+      height: var(--white-key-height);
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      margin-right: 2px;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .black-key {
+      width: var(--black-key-width);
+      height: var(--black-key-height);
+      background-color: black;
+      border: 1px solid #333;
+      border-radius: 2px;
+      margin-left: calc(-0.65 * var(--white-key-width)/2);
+      margin-right: calc(-0.65 * var(--white-key-width)/2);
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .scale-highlight {
+      background-color: yellow;
+    }
+
+    .note-label {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: black;
+      font-size: var(--note-label-font-size);
+      visibility: hidden;
+    }
+
+    .scale-highlight .note-label {
+      visibility: visible;
+    }
+
+    .button-container-scale {
+      display: flex;
+      justify-content: left;
+      margin-bottom: 20px;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .button-container-key {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .button-scale {
+  padding: 10px 10px;
+  margin: 2px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+}
+
+.button-scale.active {
+  background-color: #333;
+  color: #fff;
+}
+.button-key {
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+}
+
+.button-key.active {
+  background-color: #333;
+  color: #fff;
+}
+    .button:hover {
+      background-color: #dddddd;
+    }
+
+    .button.active {
+      background-color: #333;
+      color: #ffffff;
+    }
+
+
+    span {
+  padding-bottom: 1px;
+  border-bottom: 2px solid black;
+  line-height: 30px;
+}
+    /* CSS code for responsiveness */
+    @media screen and (max-width: 600px) {
+      .white-key {
+        width: calc(30px * 1.06);
+        height: calc(150px * 1.06);
+      }
+
+      .black-key {
+        width: calc(20px * 1.06);
+        height: calc(90px * 1.06);
+        margin-left: -10px;
+        margin-right: -10px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+    <div>
+        <h3>Options:</h3>
+        <strong> Scales: </strong>
+        <div class="button-container-scale">
+        
+          </div>
+          <strong>Key: </strong>
+        </br>
+        <div class="button-container-key">
+         
+         
+        </div>
+      </div>
+    
+  <body>
+    <div class="container">
+      <div class="keyboard" id="piano-keyboard"></div>
+    </div>
+  <script>
+    
+    // JavaScript code for generating the piano keyboard
+    function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
+  const keyboard = document.getElementById("piano-keyboard");
+  const noteMap = {
+    "C": 0,
+    "C#": 1,
+    "Db": 1,
+    "D": 2,
+    "D#": 3,
+    "Eb": 3,
+    "E": 4,
+    "F": 5,
+    "F#": 6,
+    "Gb": 6,
+    "G": 7,
+    "G#": 8,
+    "Ab": 8,
+    "A": 9,
+    "A#": 10,
+    "Bb": 10,
+    "B": 11
+  };
+
+  const startingNoteIndex = noteMap[startingNote];
+  let noteIndex = startingNoteIndex;
+  const scaleNotes = generateScaleNotes(startingNote, scaleType);
+
+  while (keyboard.children.length < keysPerOctave) {
+    const note = getNoteByIndex(noteIndex);
+
+    const key = document.createElement("div");
+    key.className = isBlackKey(note) ? "black-key" : "white-key";
+    key.id = note;
+
+    const noteLabel = document.createElement("div");
+    noteLabel.className = "note-label";
+
+    if (note.includes("#")) {
+      const nextNote = getNoteByIndex(noteIndex + 1);
+      noteLabel.innerHTML = `<span>${note} </span><br/>${nextNote}b`;
+    
+    } else if (note.includes("b")) {
+      const prevNote = getNoteByIndex(noteIndex - 1);
+      noteLabel.innerHTML = `<span>${prevNote}# </span><br/>${note}`;
+    } else {
+      noteLabel.innerText = note;
+    }
+
+    key.appendChild(noteLabel);
+    keyboard.appendChild(key);
+
+    noteIndex = (noteIndex + 1) % 12;
+  }
+
+  highlightScale(scaleNotes);
+}
+
+
+
+
+    function highlightScale(scaleNotes) {
+  const keyboard = document.querySelectorAll(".keyboard .white-key, .keyboard .black-key");
+
+  keyboard.forEach((key) => {
+    const note = key.id;
+
+    if (scaleNotes.includes(note)) {
+      key.classList.add("scale-highlight");
+    } else {
+      key.classList.remove("scale-highlight");
+    }
+  });
+}
+
+const scaleIntervals = {
+    "major": [0, 2, 4, 5, 7, 9, 11],
+    "natural-minor": [0, 2, 3, 5, 7, 8, 10],
+    "harmonic-minor": [0, 2, 3, 5, 7, 8, 11],
+    "melodic-minor": [0, 2, 3, 5, 7, 9, 11],
+    "dorian": [0, 2, 3, 5, 7, 9, 10],
+    "phrygian": [0, 1, 3, 5, 7, 8, 10],
+    "lydian": [0, 2, 4, 6, 7, 9, 11],
+    "mixolydian": [0, 2, 4, 5, 7, 9, 10],
+    "locrian": [0, 1, 3, 5, 6, 8, 10],
+    "pentatonic-major": [0, 2, 4, 7, 9],
+    "pentatonic-minor": [0, 3, 5, 7, 10],
+    "blues": [0, 3, 5, 6, 7, 10],
+    "whole-tone": [0, 2, 4, 6, 8, 10],
+    "chromatic": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "augmented": [0, 3, 4, 7, 8, 11],
+    "diminished": [0, 2, 3, 5, 6, 8, 9, 11],
+    "prometheus": [0, 2, 4, 6, 9, 10],
+    "tritone": [0, 1, 4, 6, 7, 10],
+    "enigmatic": [0, 1, 4, 6, 8, 10, 11],
+    "double-harmonic": [0, 1, 4, 5, 7, 8, 11],
+    "neapolitan-major": [0, 1, 3, 5, 7, 9, 11],
+    "neapolitan-minor": [0, 1, 3, 5, 7, 8, 11],
+    "major-blues": [0, 2, 3, 4, 7, 9],
+    "minor-blues": [0, 3, 5, 6, 7, 10],
+    "exotic": [0, 1, 4, 6, 8, 9, 11]
+  };
+
+  const noteMap = {
+        "C": 0,
+        "C#": 1,
+        "Db": 1,
+        "D": 2,
+        "D#": 3,
+        "Eb": 3,
+        "E": 4,
+        "F": 5,
+        "F#": 6,
+        "Gb": 6,
+        "G": 7,
+        "G#": 8,
+        "Ab": 8,
+        "A": 9,
+        "A#": 10,
+        "Bb": 10,
+        "B": 11
+      };
+
+    function generateScaleNotes(startingNote, scaleType) {
+      
+      
+
+      const startingNoteIndex = noteMap[startingNote];
+      const scaleNotes = [];
+      const intervals = scaleIntervals[scaleType] || scaleIntervals["major"];
+
+      for (let i = 0; i < intervals.length; i++) {
+        const noteIndex = (startingNoteIndex + intervals[i]) % 12;
+        const note = getNoteByIndex(noteIndex);
+        scaleNotes.push(note);
+      }
+      
+      
+      return scaleNotes;
+    }
+
+    function getNoteByIndex(noteIndex) {
+      const noteMap = {
+        0: "C",
+        1: "C#",
+        2: "D",
+        3: "D#",
+        4: "E",
+        5: "F",
+        6: "F#",
+        7: "G",
+        8: "G#",
+        9: "A",
+        10: "A#",
+        11: "B"
+      };
+
+      return noteMap[noteIndex];
+    }
+
+    function isBlackKey(note) {
+      return note.includes("#") || note.includes("b");
+    }
+
+
+function deletePianoKeyboard() {
+  const pianoContainer = document.getElementById('piano-keyboard');
+  pianoContainer.innerHTML = '';
+}
+
+
+
+// Function to toggle the scale type
+function toggleScale(scaleType) {
+      // Remove highlight from all scale buttons
+      const scaleButtons = document.querySelectorAll('.button-scale');
+      scaleButtons.forEach(button => {
+      button.classList.remove('active');
+      button.disabled = false; // Enable all buttons
+      });
+    
+      
+      //remove Key Highlighting
+      deletePianoKeyboard();
+      
+      // Generate the piano keyboard with the updated scale
+      const startingNote = getSelectedKey();
+      const keysPerOctave = getSelectedKeysPerOctave();
+      console.log(scaleType);
+      console.log(getSelectedKey());
+      console.log(getSelectedKeysPerOctave());
+     generatePianoKeyboard(startingNote, keysPerOctave, scaleType);
+
+     
+//Sending currently selected Key and the toggled scaletype to scale notes. 
+   
+      const scaleNotes = generateScaleNotes(getSelectedKey(), scaleType);
+      highlightScale(scaleNotes);
+
+     // Add highlight to the selected scale button
+     const selectedButton = document.getElementById(`${scaleType}ScaleButton`);
+     selectedButton.classList.add('active');
+     selectedButton.disabled = true;
+
+    }
+
+    // Function to toggle the starting key
+    function toggleKey(startingNote) {
+      // Remove highlight from all key buttons
+      const keyButtons = document.querySelectorAll('.button-key');
+      keyButtons.forEach(button => {
+        button.classList.remove('active')
+        button.disabled = false; // Enable all buttons
+      });
+      //deletes previous piano so we can generate the next one starting at the startingNote
+      deletePianoKeyboard();
+
+     console.log(getSelectedScale());
+      console.log(startingNote);
+      console.log(getSelectedKeysPerOctave());
+     //Generate the piano keyboard with the updated starting key
+      generatePianoKeyboard(startingNote, getSelectedKeysPerOctave(), getSelectedScale());
+
+      // Add highlight to the selected key button
+      const selectedButton = document.getElementById(`${startingNote}KeyButton`);
+      selectedButton.classList.add('active');
+      selectedButton.disabled = true;
+
+     
+    }
+
+    // Function to get the selected scale
+    function getSelectedScale() {
+      const scaleButtons = document.querySelectorAll('.button-scale');
+      for (let i = 0; i < scaleButtons.length; i++) {
+      //  console.log(scaleButtons.length);
+     // console.log(scaleButtons[i].textContent + " ScaleButtons[i] text content"); 
+        if (scaleButtons[i].classList.contains('active')) {
+        
+            return scaleButtons[i].textContent;
+        }
+      }
+      return 'major'; // Default scale
+    }
+
+    // Function to get the selected starting key
+    function getSelectedKey() {
+      const keyButtons = document.querySelectorAll('.button-key');
+      for (let i = 0; i < keyButtons.length; i++) {
+        if (keyButtons[i].classList.contains('active')) {
+            const buttonText = keyButtons[i].textContent;
+            const keyName = buttonText.includes('\\') ? buttonText.split('\\')[0].trim() : buttonText.trim();
+            return keyName;
+        }   
+      }
+      return 'C'; // Default starting note
+    }
+
+    // Function to get the selected keys per octave
+    /// multiple octives math is 13 + 12*#of octives. if 1 then 13, if 2 then 25, if 3 then 37, 4 = 49, 5 = 61,6 = 73,7 = 85
+    function getSelectedKeysPerOctave() {
+      return 13; // Default value
+    }
+
+
+    function generateScaleButtons() {
+  // Get the container element to append the buttons
+  const buttonContainer = document.querySelector('.button-container-scale');
+
+  // Iterate over the scaleIntervals object
+  for (const scale in scaleIntervals) {
+    
+    // Create a new button element
+    const button = document.createElement('button');
+
+    // Set the button properties
+    button.id = `${scale}ScaleButton`;
+    button.className = 'button-scale';
+    button.textContent = scale;
+    button.onclick = () => toggleScale(scale);
+
+    // Append the button to the container
+    buttonContainer.appendChild(button);
+  }
+}
+
+
+function generateKeyButtons() {
+  // Get the container element to append the buttons
+  const buttonContainer = document.querySelector('.button-container-key');
+
+  // Get the keys as an array
+  const keys = Object.keys(noteMap);
+
+  // Iterate over the keys
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    const nextKey = keys[i + 1];
+
+    // Create a new button element
+    const button = document.createElement('button');
+
+    // Set the button properties
+    button.id = `${key}KeyButton`;
+    button.className = 'button-key';
+
+    if (nextKey && noteMap[key] === noteMap[nextKey]) {
+      // Concatenate note names into the same button with '\'
+      button.textContent = `${key} \\ ${nextKey}`;
+      // Skip the next key and move to the key after that
+      i += 1;
+    } else {
+      button.textContent = key;
+    }
+
+    button.onclick = () => toggleKey(key);
+
+    // Append the button to the container
+    buttonContainer.appendChild(button);
+  }
+}
+
+
+    // Initial generation of the piano keyboard
+   // Initial generation of the piano keyboard
+  // Generate the piano keyboard starting from note C with 13 keys per octave
+    //generatePianoKeyboard("C", 13, "natural-minor");
+   // generatePianoKeyboard("C", 13, "major");
+    generateScaleButtons();
+    generateKeyButtons();
+    const initialScale = 'major';
+    const initialKey = 'C';
+
+    const initialScaleButton = document.getElementById(`${initialScale}ScaleButton`);
+    initialScaleButton.classList.add('active');
+    initialScaleButton.disabled = true;
+  
+    const initialKeyButton = document.getElementById(`${initialKey}KeyButton`);
+    initialKeyButton.classList.add('active');
+    initialKeyButton.disabled = true;
+
+    const initialKeysPerOctave = 13;
+
+    generatePianoKeyboard(initialKey, initialKeysPerOctave, initialScale);
+  </script>
+</body>
+</html>
+
+
+  </script>
+</body>
+</html>

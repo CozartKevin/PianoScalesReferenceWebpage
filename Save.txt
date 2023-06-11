@@ -25,3 +25,18 @@
         "minor-blues": [0, 3, 5, 6, 7, 10], // Minor Blues scale intervals
         "exotic": [0, 1, 4, 6, 8, 9, 11], // Exotic scale intervals
       };
+
+
+       <button id="CKeyButton" class="button-key" onclick="toggleKey('C')">C</button>
+          <button id="C#KeyButton" class="button-key" onclick="toggleKey('C#')">C#</button>
+          <button id="DKeyButton" class="button-key" onclick="toggleKey('D')">D</button>
+          <button id="D#KeyButton" class="button-key" onclick="toggleKey('D#')">D#</button>
+          <button id="EKeyButton" class="button-key" onclick="toggleKey('E')">E</button>
+          <button id="FKeyButton" class="button-key" onclick="toggleKey('F')">F</button>
+          <button id="F#KeyButton" class="button-key" onclick="toggleKey('F#')">F#</button>
+          <button id="GKeyButton" class="button-key" onclick="toggleKey('G')">G</button>
+          <button id="G#KeyButton" class="button-key" onclick="toggleKey('G#')">G#</button>
+          <button id="AKeyButton" class="button-key" onclick="toggleKey('A')">A</button>
+          <button id="A#KeyButton" class="button-key" onclick="toggleKey('A#')">A#</button>
+          <button id="BKeyButton" class="button-key" onclick="toggleKey('B')">B</button>
+          <!-- Add more key buttons -->
