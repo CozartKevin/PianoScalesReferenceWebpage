@@ -1,0 +1,9 @@
+USing vexflow for musical representation
+
+Can you use the scaleNotes variable in such a way that you input scaleNotes[0], scaleNotes[1], ... scaleNotes[7] then scaleNotes[6], scaleNotes[5], ... scaleNotes[0] for the scale
+For more than one octive we have an if(multipleOctive active check)
+     and based on the result we spin up 
+        scaleNote[0],..,[6]/4, [7]/5, [6],..,[0]/4 for 1 octive, 
+        scaleNotes[0],..,[6]/4 [0],..,[6],[7]/6,[6],..,[0]/5 [6],..,[0]/4 fro 2 octives
+        scaleNotes[0],..,[6]/4 [0],..,[6]/5 [0],..,[6]/6 [7]/7,[6],..,[0]/6,..,[6],..,[0]/5[6],..,[0]/4
+            formula: 0-6 per octive, central 7, then 6-0 per octive (Very scriptable with octive variable and scaleNotes)
