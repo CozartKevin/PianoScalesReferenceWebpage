@@ -6,12 +6,13 @@
   <title>Piano Keyboard</title>
   <link rel="stylesheet" href="css/keyboard.css">
   <script src="js/keyboard.js"></script>
+  <script src="js/fingering.js"></script>
 </head>
 
 <body>
-  
+
   <div>
-    
+
     <h3>Options:</h3>
     <strong> Scales: </strong>
     <div class="button-container-scale">
@@ -28,28 +29,29 @@
       <div class="keyboard" id="piano-keyboard"></div>
     </div>
   </body>
-<script>
+  <script>
 
-          // Initial generation of the piano keyboard
-         // Initial generation of the piano keyboard
-        // Generate the piano keyboard starting from note C with 13 keys per octave
-          //generatePianoKeyboard("C", 13, "natural-minor");
-         // generatePianoKeyboard("C", 13, "major");
-         generateScaleButtons();
-          generateKeyButtons();
-          const initialScale = 'major';
-          const initialKey = 'C';
-      
-          const initialScaleButton = document.getElementById(`${initialScale}ScaleButton`);
-          initialScaleButton.classList.add('active');
-          initialScaleButton.disabled = true;
-        
-          const initialKeyButton = document.getElementById(`${initialKey}KeyButton`);
-          initialKeyButton.classList.add('active');
-          initialKeyButton.disabled = true;
-      
-          const initialKeysPerOctave = 13;
-      
-          generatePianoKeyboard(initialKey, initialKeysPerOctave, initialScale);
-</script>
+    // Initial generation of the piano keyboard
+    // Initial generation of the piano keyboard
+    // Generate the piano keyboard starting from note C with 13 keys per octave
+    //generatePianoKeyboard("C", 13, "natural-minor");
+    // generatePianoKeyboard("C", 13, "major");
+    generateScaleButtons();
+    generateKeyButtons();
+    const initialScale = 'major';
+    const initialKey = 'C';
+
+    const initialScaleButton = document.getElementById(`${initialScale}ScaleButton`);
+    initialScaleButton.classList.add('active');
+    initialScaleButton.disabled = true;
+
+    const initialKeyButton = document.getElementById(`${initialKey}KeyButton`);
+    initialKeyButton.classList.add('active');
+    initialKeyButton.disabled = true;
+
+    const initialKeysPerOctave = 13;
+
+    generatePianoKeyboard(initialKey, initialKeysPerOctave, initialScale);
+  </script>
+
 </html>

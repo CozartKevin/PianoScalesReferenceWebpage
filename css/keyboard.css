@@ -1,190 +1,196 @@
     /* CSS code for piano keyboard */
     :root {
-        --white-key-width: calc(40px * 1.5);
-        --white-key-height: calc(200px * 1.5);
-        --black-key-width: calc(25px * 1.5);
-        --black-key-height: calc(120px * 1.5);
-        --note-label-font-size: calc(15px * 1.5);
-      }
-  
-      .container {
-        display: flex;
-        justify-content: center;
-        height: 100vh;
-      }
-  
-      .keyboard {
-        display: flex;
-      }
-  
-      .row {
-        display: flex;
-      }
-  
+      --white-key-width: calc(40px * 1.5);
+      --white-key-height: calc(200px * 1.5);
+      --black-key-width: calc(25px * 1.5);
+      --black-key-height: calc(120px * 1.5);
+      --note-label-font-size: calc(15px * 1.5);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .keyboard {
+      display: flex;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .white-key {
+      width: var(--white-key-width);
+      height: var(--white-key-height);
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      margin-right: 2px;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .black-key {
+      width: var(--black-key-width);
+      height: var(--black-key-height);
+      background-color: black;
+      border: 1px solid #333;
+      border-radius: 2px;
+      margin-left: calc(-0.65 * var(--white-key-width)/2);
+      margin-right: calc(-0.65 * var(--white-key-width)/2);
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .scale-highlight {
+      background-color: yellow;
+    }
+
+    .note-label {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: black;
+      font-size: var(--note-label-font-size);
+      visibility: hidden;
+    }
+
+    .note-label::before {
+      content: "L:" counter(number);
+      display: inline-block;
+      font-weight: 500;
+      width: auto;
+      right: 0;
+      top: 3.25em;
+      line-height: 1em;
+      font-size: 0.8em;
+      height: auto;
+      position: relative;
+
+      opacity: 0.75;
+    }
+
+    .note-label::after {
+      content: "R:" counter(number);
+      display: inline-block;
+      font-weight: 500;
+      width: auto;
+      right: 0;
+      top: 1.25em;
+      line-height: 1em;
+      font-size: 0.8em;
+      height: auto;
+      position: relative;
+      opacity: 0.75;
+    }
+
+
+    .black-key .note-label {
+      bottom: 25px;
+    }
+
+    .black-key .note-label::before {
+      top: 4.9em;
+    }
+
+
+
+    .scale-highlight .note-label {
+      visibility: visible;
+    }
+
+    .button-container-scale {
+      display: flex;
+      justify-content: left;
+      margin-bottom: 20px;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .button-container-key {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .button-scale {
+      padding: 10px 10px;
+      margin: 2px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      background-color: #f0f0f0;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .button-scale.active {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .button-key {
+      padding: 10px 20px;
+      margin-right: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      background-color: #f0f0f0;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .button-key.active {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .button:hover {
+      background-color: #dddddd;
+    }
+
+    .button.active {
+      background-color: #333;
+      color: #ffffff;
+    }
+
+
+    span {
+      padding-bottom: 1px;
+      border-bottom: 2px solid black;
+      line-height: 30px;
+    }
+
+    /* CSS code for responsiveness */
+    @media screen and (max-width: 600px) {
       .white-key {
-        width: var(--white-key-width);
-        height: var(--white-key-height);
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 2px;
-        margin-right: 2px;
-        position: relative;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.2s ease-in-out;
-        cursor: pointer;
+        width: calc(30px * 1.06);
+        height: calc(150px * 1.06);
       }
-  
+
       .black-key {
-        width: var(--black-key-width);
-        height: var(--black-key-height);
-        background-color: black;
-        border: 1px solid #333;
-        border-radius: 2px;
-        margin-left: calc(-0.65 * var(--white-key-width)/2);
-        margin-right: calc(-0.65 * var(--white-key-width)/2);
-        position: relative;
-        z-index: 1;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-        transition: background-color 0.2s ease-in-out;
-        cursor: pointer;
+        width: calc(20px * 1.06);
+        height: calc(90px * 1.06);
+        margin-left: -10px;
+        margin-right: -10px;
       }
-  
-      .scale-highlight {
-        background-color: yellow;
-      }
-  
-      .note-label {
-        position: absolute;
-        bottom: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: black;
-        font-size: var(--note-label-font-size);
-        visibility: hidden;
-      }
-  .note-label::before {
-    content: "L:" counter(number);
-    display: inline-block;
-    font-weight: 500;
-    width: auto;
-    right: 0;
-    top: 3.25em;
-    line-height: 1em;
-    font-size: 0.8em;
-    height: auto;
-    position: relative;
-  
-    opacity: 0.75;
-  }
-  
-  .note-label::after {
-    content: "R:" counter(number);
-    display: inline-block;
-    font-weight: 500;
-    width: auto;
-    right: 0;
-    top: 1.25em;
-    line-height: 1em;
-    font-size: 0.8em;
-    height: auto;
-    position: relative;
-    opacity: 0.75;
-  }
-  
-  
-  .black-key .note-label {
-    bottom: 25px;
-  }
-  .black-key .note-label::before {
-    top: 4.9em;
-  }
-  
-  
-  
-      .scale-highlight .note-label {
-        visibility: visible;
-      }
-  
-      .button-container-scale {
-        display: flex;
-        justify-content: left;
-        margin-bottom: 20px;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-  
-      .button-container-key {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
-  
-      .button {
-        font-size: 16px;
-        padding: 10px 20px;
-        margin: 0 5px;
-        background-color: #ffffff;
-        border: 1px solid #dddddd;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-      }
-      .button-scale {
-    padding: 10px 10px;
-    margin: 2px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  .button-scale.active {
-    background-color: #333;
-    color: #fff;
-  }
-  .button-key {
-    padding: 10px 20px;
-    margin-right: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  .button-key.active {
-    background-color: #333;
-    color: #fff;
-  }
-      .button:hover {
-        background-color: #dddddd;
-      }
-  
-      .button.active {
-        background-color: #333;
-        color: #ffffff;
-      }
-  
-  
-      span {
-    padding-bottom: 1px;
-    border-bottom: 2px solid black;
-    line-height: 30px;
-  }
-      /* CSS code for responsiveness */
-      @media screen and (max-width: 600px) {
-        .white-key {
-          width: calc(30px * 1.06);
-          height: calc(150px * 1.06);
-        }
-  
-        .black-key {
-          width: calc(20px * 1.06);
-          height: calc(90px * 1.06);
-          margin-left: -10px;
-          margin-right: -10px;
-        }
-      }
+    }
