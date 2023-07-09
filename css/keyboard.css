@@ -64,7 +64,7 @@
     }
 
     .note-label::before {
-      content: "L:" counter(number);
+      content:"L:"attr(Before-data-content);
       display: inline-block;
       font-weight: 500;
       width: auto;
@@ -74,12 +74,11 @@
       font-size: 0.8em;
       height: auto;
       position: relative;
-
       opacity: 0.75;
     }
 
     .note-label::after {
-      content: "R:" counter(number);
+      content: "R:"attr(After-data-content) ;
       display: inline-block;
       font-weight: 500;
       width: auto;
