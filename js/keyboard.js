@@ -1,5 +1,5 @@
 //HTML for Flat: &#9837
-//HTML for Shar: &#9839
+//HTML for Sharp: &#9839
 
 /*******************************
 SCALE Note Generation
@@ -169,7 +169,8 @@ function generateKeyButtons() {
 
     if (nextKey && noteMap[key] === noteMap[nextKey]) {
       // Concatenate note names into the same button with '\'
-      button.textContent = `${key} \\ ${nextKey}`;
+
+      button.innerHTML = `${keys[i -1]}&#9839 | ${keys[i +2]}&#9837`;
       // Skip the next key and move to the key after that
       i += 1;
     } else {
