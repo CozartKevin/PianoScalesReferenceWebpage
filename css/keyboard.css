@@ -10,11 +10,12 @@
     .container {
       display: flex;
       justify-content: center;
-      height: 100vh;
+      height: 100%;
     }
 
     .keyboard {
       display: flex;
+      height: 30vh;
     }
 
     .row {
@@ -26,12 +27,14 @@
       height: var(--white-key-height);
       background-color: white;
       border: 1px solid #ccc;
+      display: flex;
       border-radius: 2px;
       margin-right: 2px;
       position: relative;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       transition: background-color 0.2s ease-in-out;
       cursor: pointer;
+      justify-content: center;
     }
 
     .black-key {
@@ -39,6 +42,7 @@
       height: var(--black-key-height);
       background-color: black;
       border: 1px solid #333;
+      display:flex;
       border-radius: 2px;
       margin-left: calc(-0.65 * var(--white-key-width)/2);
       margin-right: calc(-0.65 * var(--white-key-width)/2);
@@ -47,6 +51,7 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
       transition: background-color 0.2s ease-in-out;
       cursor: pointer;
+      justify-content: center;
     }
 
     .scale-highlight {
@@ -54,23 +59,29 @@
     }
 
     .note-label {
-      position: absolute;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
+      display: flex;
+      position: relative;
+      /* bottom: 25px; */
+      left: -15%;
+      height: 27vh;
+      /* transform: translateX(-50%); */
       color: black;
       font-size: var(--note-label-font-size);
       visibility: hidden;
+      flex-wrap: wrap;
+      align-content: flex-end;
+      justify-content: flex-start;
+      align-items: flex-end;
     }
 
     .note-label::before {
-      content:"L:"attr(Before-data-content);
+      content: var(--before-content, "");
       display: flex;
       font-weight: 500;
       width: auto;
       right: 0;
-      top: 2.75em;
-      left: -1em;
+      top: 1em;
+      left: 0.75em;
       line-height: 1em;
       font-size: 0.8em;
       height: auto;
@@ -79,13 +90,13 @@
     }
 
     .note-label::after {
-      content: "R:"attr(After-data-content) ;
+      content: var(--after-content, "");
       display: flex;
       font-weight: 500;
       width: auto;
       right: 0;
       top: 1.25em;
-      left:-1em;
+      left: 0.75em;
       line-height: 1em;
       font-size: 0.8em;
       height: auto;
@@ -95,7 +106,9 @@
 
 
     .black-key .note-label {
-      bottom: 25px;
+     height:inherit;
+     bottom: 25px;
+     left:0.25em;
     }
 
     .black-key .note-label::before {

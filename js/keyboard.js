@@ -11,7 +11,7 @@ function generateScaleNotes(startingNote, scaleType) {
 
   const startingNoteIndex = getNoteMapByChar(startingNote);
   const scaleNotes = [];
-  const intervals = scaleIntervals[scaleType] || scaleIntervals["major"];
+  const intervals = scaleIntervals[scaleType] /* || scaleIntervals["major"]*/;
 
   for (let i = 0; i < intervals.length; i++) {
     const noteIndex = (startingNoteIndex + intervals[i]) % 12;
@@ -42,10 +42,11 @@ function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
 
     const noteLabel = document.createElement("div");
     noteLabel.className = "note-label";
+    
 
     if (note.includes("#")) {
       const nextNote = getNoteMapByIndex(noteIndex + 1);
-      noteLabel.innerHTML = `<span>${getNoteMapByIndex(noteIndex - 1)}&#9839 </span><br/>${nextNote}&#9837`;
+      noteLabel.innerHTML = `<span>${getNoteMapByIndex(noteIndex - 1)}&#9839 </span>${nextNote}&#9837`;
       //Getting note by noteIndex - 1 so we can modify the readable output with the proper HTML Code for Sharp
       //NextNote is left alone as the getNoteByIndex funciton only has naturals and sharps thus we get a natural note and add the proper HTML Code for Flat to it. No need to cleanse the symbole as it doesn't have it. 
 
@@ -68,30 +69,30 @@ function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
 };
 
 /*******************************
-HIGHLIGHT Scale Function
+HIGHLIGHT Scale Function Place Fingerings
 
 *******************************/
 function highlightScale(scaleNotes) {
   const keyboard = document.querySelectorAll(".keyboard .white-key, .keyboard .black-key");
-  const Fingering = getFingerings();
-  const leftHand = Fingering.leftHand;
-  const rightHand = Fingering.rightHand;
+   leftHandFingering = scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()].leftHand;
+   rightHandFingering = scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()].rightHand;
   const noteLabelStyleBefore = getComputedStyle(document.querySelector('.note-label'), '::before');
   const noteLabelStyleAfter = getComputedStyle(document.querySelector('.note-label'), '::After');
-  const counter = 0;
-
+  counter = 0;
 
   keyboard.forEach((key) => {
     const note = key.id;
-
+    console.log(counter);
     if (scaleNotes.includes(note)) {
+      
       key.classList.add("scale-highlight");
-      noteLabelStyleBefore.setAttribute = ('Before-data-content', `"leftHand[${counter + 1}]"`);
-      noteLabelStyleAfter.setAttribute = ('After-data-content', `'rightHand[${counter + 1}]'`);
+      const beforeElement = window.getComputedStyle(key, '::before');
+      const afterElement = window.getComputedStyle(key, '::after');
 
-      // console.log(noteLabelStyleBefore.content);
-      //  console.log(noteLabelStyleAfter.content);
+      key.style.setProperty('--before-content', `"L: ${leftHandFingering[counter]}"`);
+      key.style.setProperty('--after-content', `"R: ${rightHandFingering[counter]}"`);
 
+      ++counter;
     } else {
       key.classList.remove("scale-highlight");
     }
@@ -214,7 +215,7 @@ function setSelectedScaleButton(scaleType) {
   generatePianoKeyboard(keyNote, getSelectedKeysPerOctave(), scaleType);
 
   //Sending currently selected Key and the toggled scaletype to scale notes. 
-  highlightScale(generateScaleNotes(keyNote, scaleType));
+  //highlightScale(generateScaleNotes(keyNote, scaleType));
 
   // Add highlight to the selected scale button
   const selectedButton = document.getElementById(`${scaleType}ScaleButton`);
@@ -269,6 +270,11 @@ function getSelectedKeyButton() {
   const keyButtons = document.querySelectorAll('.button-key');
   for (let i = 0; i < keyButtons.length; i++) {
     if (keyButtons[i].classList.contains('active')) {
+
+      console.log("getSelectedKeyButton()");
+      console.log("KeyID: " + keyButtons[i].id);
+      console.log("KeyTextContent: " + keyButtons[i].textContent)
+
       const buttonText = keyButtons[i].textContent;
       const keyName = buttonText.includes('\\') ? buttonText.split('\\')[0].trim() : buttonText.trim();
       console.log(keyName);
@@ -359,8 +365,8 @@ FINGERING function
 //TODO: Need to impliment getting the fingerings from the fignerings.js file and load them in the
 // ::BEFORE (Left hand fingerings) & ::AFTER(Right hand fingerings) areas of each highlighted key.  
 *******************************/
-function getFingerings() {
-  return scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()];
+function getLeftFingerings() {
+  return scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()].lefthand;
 }
 
 /*******************************

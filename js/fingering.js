@@ -51,7 +51,7 @@ const scaleFingerings = {
     },
     "whole-tone": {
       "leftHand": [3, 2, 1, 4, 3, 2, 1],
-      "rightHand": [1, 2, 3, 4, 1, 2, 3, 4]
+      "rightHand": [1, 2, 1, 2, 3, 4, 5]
     },
     "chromatic": {
       "leftHand": [1, 3, 1, 3, 2, 1, 3, 1, 3, 1, 3, 2, 1],
@@ -105,8 +105,8 @@ const scaleFingerings = {
   //TODO customize all fingerings for C# - A# as the default fingering is for C on all scales atm (07/09/2023)
 "C#": {
   "major": {
-    "leftHand": [5, 4, 3, 2, 1, 3, 2, 1],
-    "rightHand": [1, 2, 3, 1, 2, 3, 4, 5]
+    "leftHand": [2, 3, 1, 2, 3, 4, 1, 2],
+    "rightHand": [3, 2, 1, 4, 3, 2, 1, 3]
   },
   "natural-minor": {
     "leftHand": [5, 4, 3, 2, 1, 3, 2, 1],
@@ -154,8 +154,8 @@ const scaleFingerings = {
     "rightHand": [1, 2, 3, 4, 1, 2, 3, 4]
   },
   "whole-tone": {
-    "leftHand": [3, 2, 1, 4, 3, 2, 1],
-    "rightHand": [1, 2, 3, 4, 1, 2, 3, 4]
+    "leftHand": [3, 2, 1, 3, 2, 1, 3],
+    "rightHand": [2, 3, 1, 2, 3, 1, 2]
   },
   "chromatic": {
     "leftHand": [1, 3, 1, 3, 2, 1, 3, 1, 3, 1, 3, 2, 1],
@@ -257,8 +257,8 @@ const scaleFingerings = {
     "rightHand": [1, 2, 3, 4, 1, 2, 3, 4]
   },
   "whole-tone": {
-    "leftHand": [3, 2, 1, 4, 3, 2, 1],
-    "rightHand": [1, 2, 3, 4, 1, 2, 3, 4]
+    "leftHand": [3, 2, 1, 3, 2, 1, 3],
+    "rightHand": [2, 3, 1, 2, 3, 1, 2]
   },
   "chromatic": {
     "leftHand": [1, 3, 1, 3, 2, 1, 3, 1, 3, 1, 3, 2, 1],
@@ -360,8 +360,8 @@ const scaleFingerings = {
     "rightHand": [1, 2, 3, 4, 1, 2, 3, 4]
   },
   "whole-tone": {
-    "leftHand": [3, 2, 1, 4, 3, 2, 1],
-    "rightHand": [1, 2, 3, 4, 1, 2, 3, 4]
+    "leftHand": [2, 1, 4, 3, 2, 1, 2],
+    "rightHand": [2,1,2,3,4,1,2]
   },
   "chromatic": {
     "leftHand": [1, 3, 1, 3, 2, 1, 3, 1, 3, 1, 3, 2, 1],
