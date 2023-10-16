@@ -60,68 +60,67 @@
 
     .note-label {
       display: flex;
-      position: relative;
-      /* bottom: 25px; */
-      left: -15%;
-      height: 27vh;
-      /* transform: translateX(-50%); */
       color: black;
       font-size: var(--note-label-font-size);
       visibility: hidden;
       flex-wrap: wrap;
-      align-content: flex-end;
-      justify-content: flex-start;
-      align-items: flex-end;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      position:inherit;
     }
 
     .note-label::before {
       content: var(--before-content, "");
       display: flex;
       font-weight: 500;
-      width: auto;
-      right: 0;
-      top: 1em;
-      left: 0.75em;
       line-height: 1em;
-      font-size: 0.8em;
-      height: auto;
-      position: relative;
+      font-size: 0.9em;
       opacity: 0.75;
+      position:inherit;
     }
 
     .note-label::after {
       content: var(--after-content, "");
       display: flex;
       font-weight: 500;
-      width: auto;
-      right: 0;
-      top: 1.25em;
-      left: 0.75em;
       line-height: 1em;
-      font-size: 0.8em;
-      height: auto;
-      position: relative;
+      font-size: 0.9em;
       opacity: 0.75;
+      position:inherit;
     }
-
 
     .black-key .note-label {
-     height:inherit;
-     bottom: 25px;
-     left:0.25em;
-    }
+     }
+ 
+     .black-key .note-label::before {
+       top: 4.75em;
+       left:0em;
+     }
 
-    .black-key .note-label::before {
-      top: 5em;
+     .black-key .note-label::after{
+      top: 1.75em; 
       left:0em;
-      font-size:0.74em;
       
-      
-    }
-.black-key .note-label::after{
-  left:0em;
-  font-size: 0.74em
+       
+ }
 
+
+ .white-key .note-label {
+ position:inherit;
+ top: -2em;
+ left:-0.75em;
+ align-content:flex-end;
+ }
+
+ .white-key .note-label::before {
+   top: 2em;
+   left: 1em;
+ }
+ .white-key .note-label::after{
+  top: 2em; 
+  left: 0.7em;
+   
 }
 
 
@@ -131,7 +130,7 @@
 
     .button-container-scale {
       display: flex;
-      justify-content: left;
+      justify-content: Left;
       margin-bottom: 20px;
       flex-direction: row;
       flex-wrap: wrap;
@@ -141,6 +140,8 @@
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
+      flex-direction: row;
+      flex-wrap: wrap;
     }
 
     .button {

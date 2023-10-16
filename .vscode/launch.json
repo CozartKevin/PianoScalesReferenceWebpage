@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open index.html",
-            "file": "c:\\Users\\Kevin\\Desktop\\Scales Website\\index.html"
+            "file": "F://Projects//Scales Website//PianoScalesReferenceWebpage//Test11.html"
         }
     ]
 }
