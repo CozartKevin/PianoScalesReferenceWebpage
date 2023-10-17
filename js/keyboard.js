@@ -55,6 +55,8 @@ function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
 
   console.log("Sent to highlightScale(scalenotes) from generatePianoKeyboard");
   highlightScale(scaleNotes);
+
+  generateVexFlowScale();
 }
 
 
