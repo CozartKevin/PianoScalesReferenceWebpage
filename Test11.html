@@ -3,11 +3,12 @@
 <html>
 
 <head>
-  <title>Piano Keyboard</title>
+  <title>Piano Keyboard Reference</title>
+  <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>  <!-- VexFlow JS call-->
   <link rel="stylesheet" href="css/keyboard.css">
   <script src="js/keyboard.js"></script>
   <script src="js/fingering.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>  <!-- VexFlow JS call-->
+
   
 </head>
 
@@ -24,7 +25,7 @@
     <div id="Key" class="button-container-key">
     </div>
 
-<div id="VexFlow_output" class="container">
+<div id="vexflow-container" class="container">
    
 </div>
     
@@ -34,34 +35,6 @@
   
   </body>
   <script>
-
-
-const {
-  Renderer,
-  Stave
-} = Vex.Flow;
-
-
-
-// Create an SVG renderer and attach it to the DIV element named "boo".
-const div = document.getElementById('VexFlow_output');
-const renderer = new Renderer(div, Renderer.Backends.SVG);
-
-// Configure the rendering context.
-renderer.resize(500, 200);
-const context = renderer.getContext();
-
-
-
-// Create a stave of width 400 at position 10, 40 on the canvas.
-const stave = new Stave(0, 60, 600);
-
-// Add a clef and time signature.
-stave.addClef('treble').addTimeSignature('4/4');
-
-// Connect it to the rendering context and draw!
-stave.setContext(context).draw();
-
 
 
 
@@ -88,7 +61,13 @@ stave.setContext(context).draw();
     generatePianoKeyboard(initialKey, initialKeysPerOctave, initialScale);
 
 
+    
 
+
+    document.addEventListener('DOMContentLoaded', function () {
+  
+  generateVexFlowScale();
+});
 
 
   </script>

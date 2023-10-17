@@ -16,6 +16,8 @@ function generateScaleNotes(startingNote, scaleType) {
     scaleNotes.push(note);
   }
 
+  console.log(scaleNotes + "Scale Notes");
+
   return scaleNotes;
 }
 
@@ -152,7 +154,6 @@ const keys = Object.keys(noteMap);
 
     // Concatenate note names into the same button with '\'
     if (nextKey && noteMap[key] === noteMap[nextKey]) {
-
       button.innerHTML = `${keys[i - 1]}&#9839 | ${keys[i + 2]}&#9837`;
       // Skip the next key and move to the key after that
       i += 1;
@@ -168,17 +169,50 @@ const keys = Object.keys(noteMap);
   };
 
 
-
-/************************************
- * 
+/*******************************
  * Generate VexFlow Code for Scales
- * 
- * 
- * 
- * 
- ************************************/
+ *******************************/
+function generateVexFlowScale() {
+  // Get the container element for VexFlow
+  const vexFlowContainer = document.getElementById('vexflow-container');
 
+  // Clear previous VexFlow content
+  vexFlowContainer.innerHTML = '';
 
+  const scaleNotes = generateScaleNotes(getSelectedKeyButton(), getSelectedScaleButton());
+
+  // VexFlow setup
+  const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
+  const context = renderer.getContext();
+  context.setFont('Arial', 10);
+
+  // Create a stave of width 400 at position 10, 40 with treble clef
+  const stave = new Vex.Flow.Stave(10, 40, 400);
+  stave.addClef('treble').addTimeSignature('4/4');
+
+  // Connect stave to the rendering context and draw
+  stave.setContext(context).draw();
+
+  // Create a voice and add dynamically generated notes
+  const voice = new Vex.Flow.Voice({ num_beats: scaleNotes.length, beat_value: 4 });
+
+  scaleNotes.forEach(note => {
+    const staveNote = new Vex.Flow.StaveNote({
+      keys: [`${note}/4`], // Assuming quarter notes for simplicity
+      duration: 'q'
+    });
+    voice.addTickable(staveNote);
+  });
+
+  // Format and render the voice
+  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
+  voice.draw(context, stave, formatter);
+
+  // Render
+  renderer.resize(500, 200);
+  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
+  renderer.draw();
+}
 
 
 
@@ -300,6 +334,25 @@ function extractKeyFromButtonText(buttonText) {
 
   // Check if there is a match, and extract the result
   return match ? match[0] : buttonText;
+}
+
+/****************************************************************************************************
+ * ConvertToVexFlowFormat
+ *  converts output from generateScaleNotes into a format that VexFlow can recognize in a voice. 
+ ***************************************************************************************************/
+
+function convertToVexFlowFormat(scaleNotes) {
+  const vexFlowNotes = [];
+
+  for (const note of scaleNotes) {
+    // Start from the 4th octave and append the note name
+    const vexFlowNote = note + '4/q';
+
+    // Add the note to the array
+    vexFlowNotes.push(vexFlowNote);
+  }
+
+  return vexFlowNotes;
 }
 
 /*******************************
