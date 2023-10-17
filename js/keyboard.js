@@ -12,6 +12,7 @@ function generateScaleNotes(startingNote, scaleType) {
 
   for (const interval of intervals) {
     const noteIndex = (startingNoteIndex + interval) % 12;
+    console.log(noteIndex);
     const note = getNoteMapByIndex(noteIndex);
     scaleNotes.push(note);
   }
@@ -25,14 +26,23 @@ function generateScaleNotes(startingNote, scaleType) {
  * KEYBOARD Layout Function
  * JavaScript code for automagically generating the piano keyboard
  *******************************/
-function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
+function generatePianoKeyboard() {
+
+ const startingNote = getSelectedKeyButton();
+ const keysPerOctave = getSelectedKeysPerOctave();
+ const scaleType = getSelectedScaleButton();
+
+console.log (startingNote + "Starting note in Generate Keybaord")
+
   const keyboard = document.getElementById("piano-keyboard");
+
   let noteIndex = getNoteMapByChar(startingNote);
-  const scaleNotes = generateScaleNotes(startingNote, scaleType);
+  console.log(noteIndex + "GetNoteMapByChar");
 
   while (keyboard.children.length < keysPerOctave) {
     const note = getNoteMapByIndex(noteIndex);
     const key = document.createElement("div");
+    console.log(note + "NOTE INDEX GOING INTO isBlackkey");
 
     key.className = isBlackKey(note) ? "black-key" : "white-key";
     key.id = note;
@@ -54,7 +64,7 @@ function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
   }
 
   console.log("Sent to highlightScale(scalenotes) from generatePianoKeyboard");
-  highlightScale(scaleNotes);
+  highlightScale(generateScaleNotes(startingNote, scaleType));
 
   generateVexFlowScale();
 }
@@ -213,7 +223,7 @@ function generateVexFlowScale() {
   // Render
   renderer.resize(500, 200);
   renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
-  renderer.draw();
+  //renderer.draw();
 }
 
 
@@ -255,7 +265,7 @@ function setSelectedScaleButton(scaleType) {
     console.log("Out:" + scaleType);
 
     // Generate the piano keyboard with the updated scale
-    generatePianoKeyboard(keyNote, getSelectedKeysPerOctave(), scaleType);
+    generatePianoKeyboard();
 
   }
 }
@@ -275,7 +285,8 @@ function getSelectedScaleButton() {
     }
   }
 
-  // Default scale if no active scale button is found
+  // Sets and returns Default scale of major if no active scale button is found
+  setSelectedScaleButton('major');
   return 'major';
 }
 
@@ -304,8 +315,9 @@ function setSelectedKeyButton(startingNote) {
     selectedButton.disabled = true;
   }
 
+  
  // Generate the piano keyboard with the updated starting key
- generatePianoKeyboard(startingNote, getSelectedKeysPerOctave(), getSelectedScaleButton());
+ generatePianoKeyboard();
 }
 
 
@@ -320,22 +332,30 @@ function getSelectedKeyButton() {
       console.log("KeyTextContent: " + keyButton.textContent);
 
       const buttonText = keyButton.textContent;
+      console.log(buttonText);
       const keyName = extractKeyFromButtonText(buttonText);
 
       console.log(keyName);
       return keyName;
     }
   }
-  return ; // Default starting note
+    // Sets and returns Default key of C if no active scale button is found
+  setSelectedKeyButton('C');
+  return 'C'; // Default starting note
 }
 
 
 function extractKeyFromButtonText(buttonText) {
-  // If '\\' is present, split the text content and trim any leading or trailing spaces
-  const match = buttonText.match(/[A-Ga-g]#?/);
+  // Replace HTML entity &#9839 with #
+  const normalizedText = buttonText.replace(/&#9839/g, "#");
 
-  // Check if there is a match, and extract the result
-  return match ? match[0] : buttonText;
+  // If '\\' is present, split the text content and trim any leading or trailing spaces
+  const keyParts = normalizedText.split('|').map(part => part.trim());
+
+  // Extract the first two characters from the first part and trim
+  const firstKey = keyParts[0].substring(0, 2).trim();
+
+  return firstKey;
 }
 
 /****************************************************************************************************
@@ -379,27 +399,30 @@ function getNoteMapByChar(noteChar) {
   const charNoteMap = {
     "C": 0,
     "C#": 1,
-    "Db": 1,
     "D": 2,
     "D#": 3,
-    "Eb": 3,
     "E": 4,
     "F": 5,
     "F#": 6,
-    "Gb": 6,
     "G": 7,
     "G#": 8,
-    "Ab": 8,
     "A": 9,
     "A#": 10,
-    "Bb": 10,
     "B": 11
   };
 
-  return charNoteMap[noteChar];
-}
+  // Extract the first two characters and trim
+  const normalizedNoteChar = noteChar.substring(0, 2).trim();
 
-//Function returns the name of the key based on the index
+  console.log(normalizedNoteChar + " normalizedNoteChar ");
+  console.log(charNoteMap[normalizedNoteChar] + " charNoteMap NoteChar ");
+
+  const noteIndex = charNoteMap[normalizedNoteChar];
+  console.log(noteIndex + " Note Index");
+
+  return noteIndex;
+}
+  
 //Doesn't reference flat keys as the indexing is the same as sharps
 //Code in functions add in flat when needed but reference the sharp only
 function getNoteMapByIndex(noteIndex) {
@@ -417,6 +440,8 @@ function getNoteMapByIndex(noteIndex) {
     10: "A#",
     11: "B"
   };
+
+  console.log(indexNoteMap[noteIndex] + "Note Index");
 
   return indexNoteMap[noteIndex];
 }
