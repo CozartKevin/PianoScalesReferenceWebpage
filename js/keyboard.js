@@ -55,6 +55,8 @@ function generatePianoKeyboard(startingNote, keysPerOctave, scaleType) {
 
   console.log("Sent to highlightScale(scalenotes) from generatePianoKeyboard");
   highlightScale(scaleNotes);
+
+  generateVexFlowScale();
 }
 
 
@@ -211,7 +213,7 @@ function generateVexFlowScale() {
   // Render
   renderer.resize(500, 200);
   renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
-  renderer.draw();
+  
 }
 
 
