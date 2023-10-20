@@ -42,7 +42,7 @@ console.log (startingNote + "Starting note in Generate Keybaord")
   while (keyboard.children.length < keysPerOctave) {
     const note = getNoteMapByIndex(noteIndex);
     const key = document.createElement("div");
-    console.log(note + "NOTE INDEX GOING INTO isBlackkey");
+    console.log(note + " NOTE INDEX GOING INTO isBlackkey");
 
     key.className = isBlackKey(note) ? "black-key" : "white-key";
     key.id = note;
@@ -331,9 +331,9 @@ function getSelectedKeyButton() {
       console.log("KeyID: " + keyButton.id);
       console.log("KeyTextContent: " + keyButton.textContent);
 
-      const buttonText = keyButton.textContent;
-      console.log(buttonText);
-      const keyName = extractKeyFromButtonText(buttonText);
+      const buttonID = keyButton.id;
+      console.log(buttonID + " BUTTON TEXT");
+      const keyName = extractKeyFromButtonText(buttonID);
 
       console.log(keyName);
       return keyName;
@@ -345,18 +345,13 @@ function getSelectedKeyButton() {
 }
 
 
-function extractKeyFromButtonText(buttonText) {
-  // Replace HTML entity &#9839 with #
-  const normalizedText = buttonText.replace(/&#9839/g, "#");
+function extractKeyFromButtonText(buttonID) {
+  // Remove the string "KeyButton" from the buttonID
+  const keyWithoutKeyButton = buttonID.replace(/KeyButton/g, '');
 
-  // If '\\' is present, split the text content and trim any leading or trailing spaces
-  const keyParts = normalizedText.split('|').map(part => part.trim());
-
-  // Extract the first two characters from the first part and trim
-  const firstKey = keyParts[0].substring(0, 2).trim();
-
-  return firstKey;
+  return keyWithoutKeyButton;
 }
+
 
 /****************************************************************************************************
  * ConvertToVexFlowFormat
