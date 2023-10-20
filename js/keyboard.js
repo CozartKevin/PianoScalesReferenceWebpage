@@ -200,7 +200,7 @@ function generateVexFlowScale() {
 
   // Create a stave of width 400 at position 10, 40 with treble clef
   const stave = new Vex.Flow.Stave(10, 40, 400);
-  stave.addClef('treble').addTimeSignature('4/4');
+  stave.addClef('treble');
 
   // Connect stave to the rendering context and draw
   stave.setContext(context).draw();
