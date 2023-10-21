@@ -5,13 +5,12 @@
  * SCALE Note Generation
  * Used to generate the notes in the scale based on the starting note and scale type using the scale interval section
  *******************************/
-function generateScaleNotes(startingNote, scaleType) {
-  const startingNoteIndex = getNoteMapByChar(startingNote);
+function generateScaleNotes() {
   const scaleNotes = [];
-  const intervals = scaleIntervals[scaleType] || scaleIntervals["major"];
+  const intervals = scaleIntervals[getSelectedScaleButton()] || scaleIntervals["major"];
 
   for (const interval of intervals) {
-    const noteIndex = (startingNoteIndex + interval) % 12;
+    const noteIndex = (getStartingNoteIndex() + interval) % 12;
     console.log(noteIndex);
     const note = getNoteMapByIndex(noteIndex);
     scaleNotes.push(note);
@@ -27,22 +26,20 @@ function generateScaleNotes(startingNote, scaleType) {
  * JavaScript code for automagically generating the piano keyboard
  *******************************/
 function generatePianoKeyboard() {
-
- const startingNote = getSelectedKeyButton();
  const keysPerOctave = getSelectedKeysPerOctave();
- const scaleType = getSelectedScaleButton();
+ let startingNoteIndex = getStartingNoteIndex();
+   console.log(startingNoteIndex + "getStartingNoteIndex");
 
-console.log (startingNote + "Starting note in Generate Keybaord")
 
   const keyboard = document.getElementById("piano-keyboard");
+  keyboard.innerHTML = ''; // Clear previous Keyboard
 
-  let noteIndex = getNoteMapByChar(startingNote);
-  console.log(noteIndex + "GetNoteMapByChar");
+
 
   while (keyboard.children.length < keysPerOctave) {
-    const note = getNoteMapByIndex(noteIndex);
-    const key = document.createElement("div");
-    console.log(note + " NOTE INDEX GOING INTO isBlackkey");
+ const note = getNoteMapByIndex(startingNoteIndex);
+  const key = document.createElement("div");
+  console.log(note + " NOTE INDEX GOING INTO isBlackkey");
 
     key.className = isBlackKey(note) ? "black-key" : "white-key";
     key.id = note;
@@ -51,8 +48,8 @@ console.log (startingNote + "Starting note in Generate Keybaord")
     noteLabel.className = "note-label";
 
     if (note.includes("#")) {
-      const nextNote = getNoteMapByIndex(noteIndex + 1);
-      noteLabel.innerHTML = `<span>${getNoteMapByIndex(noteIndex - 1)}&#9839 </span>${nextNote}&#9837`;
+      const nextNote = getNoteMapByIndex(startingNoteIndex + 1);
+      noteLabel.innerHTML = `<span>${getNoteMapByIndex(startingNoteIndex - 1)}&#9839 </span>${nextNote}&#9837`;
     } else {
       noteLabel.innerText = note;
     }
@@ -60,11 +57,11 @@ console.log (startingNote + "Starting note in Generate Keybaord")
     key.appendChild(noteLabel);
     keyboard.appendChild(key);
 
-    noteIndex = (noteIndex + 1) % 12;
+    startingNoteIndex = (startingNoteIndex + 1) % 12;
   }
 
   console.log("Sent to highlightScale(scalenotes) from generatePianoKeyboard");
-  highlightScale(generateScaleNotes(startingNote, scaleType));
+  highlightScale(generateScaleNotes());
 
   generateVexFlowScale();
 }
@@ -122,7 +119,7 @@ function generateScaleButtons() {
 
     // Set the button properties
     button.id = `${scale}ScaleButton`;
-    button.className = 'button-scale';
+    button.className = 'scale-button';
     button.textContent = scale;
     button.onclick = () => setSelectedScaleButton(scale);
 
@@ -162,7 +159,7 @@ const keys = Object.keys(noteMap);
 
     // Set the button properties
     button.id = `${key}KeyButton`;
-    button.className = 'button-key';
+    button.className = 'key-button';
 
     // Concatenate note names into the same button with '\'
     if (nextKey && noteMap[key] === noteMap[nextKey]) {
@@ -181,8 +178,40 @@ const keys = Object.keys(noteMap);
   };
 
 
-/*******************************
- * Generate VexFlow Code for Scales
+  /*******************************
+ * Generate Ovtave Buttons
+ * Function sets up the initial Octave Buttons in the "Options" Menu under heading "Keys:"
+ *******************************/
+
+
+  function generateOctaveButtons() {
+    const octaveContainer = document.getElementById('Octaves'); // Use getElementById
+  
+    // Specify the number of octaves you want to support
+    const octaveOptions = [1, 2, 3];
+  
+    octaveOptions.forEach(octave => {
+      const button = document.createElement('button');
+      button.className = 'octave-button';
+      button.dataset.octaves = octave;
+      button.textContent = `${octave}`;
+  
+      button.onclick = () => {
+        setOctaveButtonActive(button);
+        generatePianoKeyboard();
+      };
+  
+      octaveContainer.appendChild(button);
+    });
+  
+    // Set the default octave button as active
+    setOctaveButtonActive(octaveContainer.firstElementChild);
+  }
+  
+
+  /*******************************
+ *  Generate VexFlow Code for Scales
+ * Function sets up the VexFlow content based on selected Key and Buttons
  *******************************/
 function generateVexFlowScale() {
   // Get the container element for VexFlow
@@ -191,7 +220,7 @@ function generateVexFlowScale() {
   // Clear previous VexFlow content
   vexFlowContainer.innerHTML = '';
 
-  const scaleNotes = generateScaleNotes(getSelectedKeyButton(), getSelectedScaleButton());
+  const scaleNotes = generateScaleNotes();
 
   // VexFlow setup
   const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
@@ -245,14 +274,11 @@ Helper Functions
 // Function: Sets the selected ScaleType as Active
 function setSelectedScaleButton(scaleType) {
   // Remove highlight from all scale buttons and enable them
-  const scaleButtons = document.querySelectorAll('.button-scale');
+  const scaleButtons = document.querySelectorAll('.scale-button');
   scaleButtons.forEach(button => {
     button.classList.remove('active');
     button.disabled = false;
   });
-
-  // Get the currently selected key
-  const keyNote = getSelectedKeyButton();
 
   // Remove key highlighting
   deletePianoKeyboard();
@@ -273,7 +299,7 @@ function setSelectedScaleButton(scaleType) {
 
 // Function: Gets the current active ScaleType
 function getSelectedScaleButton() {
-  const scaleButtons = document.querySelectorAll('.button-scale');
+  const scaleButtons = document.querySelectorAll('.scale-button');
 
   for (const scaleButton of scaleButtons) {
     if (scaleButton.classList.contains('active')) {
@@ -299,7 +325,7 @@ function getSelectedScaleButton() {
 // Function: Sets the selected KeyType as Active
 function setSelectedKeyButton(startingNote) {
    // Remove highlight from all key buttons and enable them
-   const keyButtons = document.querySelectorAll('.button-key');
+   const keyButtons = document.querySelectorAll('.key-button');
    keyButtons.forEach(button => {
      button.classList.remove('active');
      button.disabled = false;
@@ -324,7 +350,7 @@ function setSelectedKeyButton(startingNote) {
 // Function Gets the current Active KeyType
 // it splits out the sharp and flats and uses the Sharp name for the note. 
 function getSelectedKeyButton() {
-  const keyButtons = document.querySelectorAll('.button-key');
+  const keyButtons = document.querySelectorAll('.key-button');
   for (const keyButton of keyButtons) {
     if (keyButton.classList.contains('active')) {
       console.log("getSelectedKeyButton()");
@@ -333,7 +359,7 @@ function getSelectedKeyButton() {
 
       const buttonID = keyButton.id;
       console.log(buttonID + " BUTTON TEXT");
-      const keyName = extractKeyFromButtonText(buttonID);
+      const keyName = extractKeyFromButtonID(buttonID);
 
       console.log(keyName);
       return keyName;
@@ -345,12 +371,45 @@ function getSelectedKeyButton() {
 }
 
 
-function extractKeyFromButtonText(buttonID) {
-  // Remove the string "KeyButton" from the buttonID
-  const keyWithoutKeyButton = buttonID.replace(/KeyButton/g, '');
+/*******************************
+ * Octave Button set and get functions
+ *******************************/
 
-  return keyWithoutKeyButton;
+function setOctaveButtonActive(button) {
+  const octaveButtons = document.querySelectorAll('.octave-button');
+  octaveButtons.forEach(b => b.classList.remove('active'));
+  button.classList.add('active');
 }
+
+
+// Function: Gets the current active ScaleType
+function getSelectedOctaveButton() {
+  const octaveButtons = document.querySelectorAll('.octave-button');
+  for (const button of octaveButtons) {
+    if (button.classList.contains('active')) {
+      return button.dataset.octaves // 13 keys per octave, plus the starting note
+    }
+  }
+
+  // Default value
+  return 1;
+}
+
+
+
+function getSelectedKeysPerOctave() {
+  const octaveButtons = document.querySelectorAll('.octave-button');
+  for (const button of octaveButtons) {
+    if (button.classList.contains('active')) {
+      return parseInt(button.dataset.octaves, 10) * 12 + 1; // 13 keys per octave, plus the starting note
+    }
+  }
+
+  // Default value
+  return 13;
+}
+
+
 
 
 /****************************************************************************************************
@@ -373,24 +432,13 @@ function convertToVexFlowFormat(scaleNotes) {
 }
 
 /*******************************
-Octive Button set and get functions
-
-*******************************/
-// TODO: Implement additional octives in this funciton by adding a number of octives 
-// Function to get the selected keys per octave
-/// multiple octives math is 13 + 12*#of octives. if 1 then 13, if 2 then 25, if 3 then 37, 4 = 49, 5 = 61,6 = 73,7 = 85
-function getSelectedKeysPerOctave() {
-  return 13; // Default value
-}
-
-
-/*******************************
 NOTE Mapping Get functions
 //Get by Character and by Index
 *******************************/
 
 //Function returns the index of the character sent into it based on the piano key names
-function getNoteMapByChar(noteChar) {
+function getStartingNoteIndex() {
+  
   const charNoteMap = {
     "C": 0,
     "C#": 1,
@@ -407,11 +455,9 @@ function getNoteMapByChar(noteChar) {
   };
 
   // Extract the first two characters and trim
-  const normalizedNoteChar = noteChar.substring(0, 2).trim();
+  const normalizedNoteChar = getSelectedKeyButton().substring(0, 2).trim();
 
-  console.log(normalizedNoteChar + " normalizedNoteChar ");
-  console.log(charNoteMap[normalizedNoteChar] + " charNoteMap NoteChar ");
-
+  console.log (normalizedNoteChar + "getStartingNoteIndex |  Note normalized");
   const noteIndex = charNoteMap[normalizedNoteChar];
   console.log(noteIndex + " Note Index");
 
@@ -453,12 +499,14 @@ function deletePianoKeyboard() {
 }
 
 /*******************************
-FINGERING function
-//TODO: Need to impliment getting the fingerings from the fignerings.js file and load them in the
-// ::BEFORE (Left hand fingerings) & ::AFTER(Right hand fingerings) areas of each highlighted key.  
+Extract Keys From Button ID Mapping Get functions
+//Get by Character and by Index
 *******************************/
-function getLeftFingerings() {
-  return scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()].lefthand;
+function extractKeyFromButtonID(buttonID) {
+  // Remove the string "KeyButton" from the buttonID
+  const keyWithoutKeyButton = buttonID.replace(/KeyButton/g, '');
+
+  return keyWithoutKeyButton;
 }
 
 /*******************************

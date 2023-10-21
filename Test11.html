@@ -14,23 +14,18 @@
 
 <body>
 
-  <h3>Options:</h3>
-  <h4> Scales: </h4>
-<div id="Scales" class="Container button-container-scale">
 
-   
-  </div>
-    <h4>Key: </h4>
-    
-    <div id="Key" class="button-container-key">
-    </div>
 
-<div id="vexflow-container" class="container">
-   
-</div>
-    
-<div id="piano-keyboard" class="container keyboard">
-    
+<div id="vexflow-container" class="container"></div>
+
+<div id="piano-keyboard" class="container keyboard"></div>    
+<h3>Options:</h3>
+<h4> Scales: </h4>
+<div id="Scales" class="Container button-container-scale"></div>
+  <h4>Key: </h4>
+  <div id="Keys" class="button-container-key"></div>
+  <h4>Octaves:</h4>
+  <div id="Octaves" class="button-container-octave"></div>
 </div>
   
   </body>
@@ -45,6 +40,7 @@
     // generatePianoKeyboard("C", 13, "major");
     generateScaleButtons();
     generateKeyButtons();
+    generateOctaveButtons();
     generatePianoKeyboard();
 
 
