@@ -230,7 +230,7 @@ function generateVexFlowScale() {
 
   // Create a stave of width 400 at position 10, 40 with treble clef
   const stave = new Vex.Flow.Stave(10, 40, 500);
-  stave.addClef('treble');
+  stave.addClef('treble').addKeySignature( `${scaleNotes[0]}`);
 
   // Connect stave to the rendering context and draw
   stave.setContext(context).draw();
@@ -243,13 +243,22 @@ function generateVexFlowScale() {
 
   scaleNotes.forEach(note => {
     console.log(note + " Notes going into staveNote as Keys: ['${note}/4']");
-    
+    if(!isBlackKey(note)){
     const staveNote = new Vex.Flow.StaveNote({
       keys: [note + '/4'],  // Assuming quarter notes for simplicity
       duration: 'q',
       
     });
     voice.addTickable(staveNote);
+  } else{
+    console.log(" || Inside Accidental of For Loop");
+    const staveNote = new Vex.Flow.StaveNote({
+      keys: [note + '/4'],  // Assuming quarter notes for simplicity
+      duration: 'q',
+    });
+    voice.addTickable(staveNote);
+  }
+   
   });
 
   // Format and render the voice
@@ -260,6 +269,86 @@ function generateVexFlowScale() {
   renderer.resize(500, 200);
   renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
   //renderer.draw();
+
+
+
+/*
+  //EasyScore Attempt
+
+const { Factory } = Vex.Flow;
+
+// Create a VexFlow renderer attached to the DIV element with id="output".
+const vf = new Factory({ renderer: { elementId: 'vexflow-container' } });
+const score = vf.EasyScore();
+const system = vf.System();
+
+
+const scaleNotes = convertToVexFlowFormat();
+console.log(scaleNotes + "Format Check for scaleNotes");
+// Create a 4/4 treble stave and add two parallel voices.
+system.addStave({
+  voices: [
+    // Top voice has 4 quarter notes with stems up.
+    score.voice(score.notes(`${scaleNotes}`, { stem: 'up' }))
+   
+    // Bottom voice has two half notes, with stems down.
+ 
+  ]
+}).addClef('treble').addTimeSignature('4/4');
+
+// Draw it!
+vf.draw();
+*/
+/*
+// VexFlow Tutorial API Attempt
+
+const { Renderer, Stave } = Vex.Flow;
+
+// Create an SVG renderer and attach it to the DIV element named "boo".
+const div = document.getElementById("vexflow-container");
+const renderer = new Renderer(div, Renderer.Backends.SVG);
+
+// Configure the rendering context.
+renderer.resize(400, 150);
+const context = renderer.getContext();
+
+// Create a stave of width 400 at position 10, 40 on the canvas.
+const stave = new Stave(10, 40, 600);
+
+// Add a clef and time signature.
+stave.addClef("treble");
+
+// Connect it to the rendering context and draw!
+stave.setContext(context).draw();
+
+
+const scaleNotes = convertToVexFlowFormat();
+console.log(scaleNotes + "Format Check for scaleNotes");
+
+
+scaleNotes.forEach(note => {
+  console.log(note + " Notes going into staveNote as Keys: ['${note}/4']");
+  
+  if(!isBlackKey(note)){
+    const staveNote = new Vex.Flow.StaveNote({ keys: [`${note}`], duration: "q" });
+    voice.addTickable(staveNote);
+  }else{
+    const staveNote = new Vex.Flow.StaveNote({ keys: [`${note}`], duration: "q" }).addModifier(new Accidental('#'));
+    voice.addTickable(staveNote);
+  }
+
+ 
+});
+
+  // Format and render the voice
+  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
+  voice.draw(context, stave, formatter);
+
+  // Render
+  renderer.resize(500, 200);
+  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
+  //renderer.draw();
+*/
 }
 
 /************************************************************************************************************************************************/
@@ -413,14 +502,18 @@ function getSelectedKeysPerOctave() {
 
 function convertToVexFlowFormat(scaleNotes) {
   const vexFlowNotes = [];
+  scaleNotes = generateScaleNotes();
+  let numOctString = 3 + parseInt(getSelectedOctaveButton(),10);
 
   for (const note of scaleNotes) {
     // Start from the 4th octave and append the note name
-    const vexFlowNote = note + '4/q';
+    const vexFlowNote = note + '/' + numOctString.toString();
 
     // Add the note to the array
     vexFlowNotes.push(vexFlowNote);
   }
+  console.log(vexFlowNotes);
+
 
   return vexFlowNotes;
 }
