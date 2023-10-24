@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/keyboard.css">
   <script src="js/keyboard.js"></script>
   <script src="js/fingering.js"></script>
+  <script src="js/allOctaveFingering.js"></script>
 
   
 </head>
@@ -47,10 +48,19 @@
     
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-  
-  generateVexFlowScale();
-});
+
+
+if (
+  scaleFingeringsAllOct &&
+  scaleFingeringsAllOct["major"] &&
+  scaleFingeringsAllOct["major"]["C"] &&
+  scaleFingeringsAllOct["major"]["C"]["1"]
+) {
+  console.log(scaleFingeringsAllOct["major"]["D#"]["1"].leftHand + " Left hand from All Oct");
+  console.log(scaleFingeringsAllOct["major"]["D#"]["1"].rightHand + " Right hand from All Oct");
+} else {
+  console.log("Some properties are undefined. Cannot access '1'.");
+}
 
 
   </script>
