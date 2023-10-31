@@ -214,13 +214,16 @@ const keys = Object.keys(noteMap);
  * Function sets up the VexFlow content based on selected Key and Buttons
  *******************************/
 function generateVexFlowScale() {
+
+  const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = Vex.Flow;
+
   // Get the container element for VexFlow
   const vexFlowContainer = document.getElementById('vexflow-container');
 
   // Clear previous VexFlow content
   vexFlowContainer.innerHTML = '';
 
-  const scaleNotes = generateScaleNotes();
+  const scaleNotes = convertToVexFlowFormat();
   console.log(scaleNotes + " Inside VexFlowScale");
 
   // VexFlow setup
@@ -230,7 +233,7 @@ function generateVexFlowScale() {
 
   // Create a stave of width 400 at position 10, 40 with treble clef
   const stave = new Vex.Flow.Stave(10, 40, 500);
-  stave.addClef('treble').addKeySignature( `${scaleNotes[0]}`);
+  stave.addClef('treble')//.addKeySignature( `${scaleNotes[0]}`);
 
   // Connect stave to the rendering context and draw
   stave.setContext(context).draw();
@@ -243,102 +246,21 @@ function generateVexFlowScale() {
 
   scaleNotes.forEach(note => {
     console.log(note + " Notes going into staveNote as Keys: ['${note}/4']");
-    if(!isBlackKey(note)){
-    const staveNote = new Vex.Flow.StaveNote({
-      keys: [note + '/4'],  // Assuming quarter notes for simplicity
+
+    let staveNote = new Vex.Flow.StaveNote({
+      keys: [note],  // Assuming quarter notes for simplicity
       duration: 'q',
       
-    });
-    voice.addTickable(staveNote);
-  } else{
-    console.log(" || Inside Accidental of For Loop");
-    const staveNote = new Vex.Flow.StaveNote({
-      keys: [note + '/4'],  // Assuming quarter notes for simplicity
-      duration: 'q',
-    });
-    voice.addTickable(staveNote);
-  }
-   
   });
 
-  // Format and render the voice
-  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
-  voice.draw(context, stave, formatter);
+    if(isBlackKey(note)){
+      staveNote.addModifier(new Accidental("#"))
+    }
 
-  // Render
-  renderer.resize(500, 200);
-  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
-  //renderer.draw();
-
-
-
-/*
-  //EasyScore Attempt
-
-const { Factory } = Vex.Flow;
-
-// Create a VexFlow renderer attached to the DIV element with id="output".
-const vf = new Factory({ renderer: { elementId: 'vexflow-container' } });
-const score = vf.EasyScore();
-const system = vf.System();
-
-
-const scaleNotes = convertToVexFlowFormat();
-console.log(scaleNotes + "Format Check for scaleNotes");
-// Create a 4/4 treble stave and add two parallel voices.
-system.addStave({
-  voices: [
-    // Top voice has 4 quarter notes with stems up.
-    score.voice(score.notes(`${scaleNotes}`, { stem: 'up' }))
-   
-    // Bottom voice has two half notes, with stems down.
- 
-  ]
-}).addClef('treble').addTimeSignature('4/4');
-
-// Draw it!
-vf.draw();
-*/
-/*
-// VexFlow Tutorial API Attempt
-
-const { Renderer, Stave } = Vex.Flow;
-
-// Create an SVG renderer and attach it to the DIV element named "boo".
-const div = document.getElementById("vexflow-container");
-const renderer = new Renderer(div, Renderer.Backends.SVG);
-
-// Configure the rendering context.
-renderer.resize(400, 150);
-const context = renderer.getContext();
-
-// Create a stave of width 400 at position 10, 40 on the canvas.
-const stave = new Stave(10, 40, 600);
-
-// Add a clef and time signature.
-stave.addClef("treble");
-
-// Connect it to the rendering context and draw!
-stave.setContext(context).draw();
-
-
-const scaleNotes = convertToVexFlowFormat();
-console.log(scaleNotes + "Format Check for scaleNotes");
-
-
-scaleNotes.forEach(note => {
-  console.log(note + " Notes going into staveNote as Keys: ['${note}/4']");
-  
-  if(!isBlackKey(note)){
-    const staveNote = new Vex.Flow.StaveNote({ keys: [`${note}`], duration: "q" });
-    voice.addTickable(staveNote);
-  }else{
-    const staveNote = new Vex.Flow.StaveNote({ keys: [`${note}`], duration: "q" }).addModifier(new Accidental('#'));
     voice.addTickable(staveNote);
   }
 
- 
-});
+  );
 
   // Format and render the voice
   const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
@@ -347,8 +269,7 @@ scaleNotes.forEach(note => {
   // Render
   renderer.resize(500, 200);
   renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
-  //renderer.draw();
-*/
+
 }
 
 /************************************************************************************************************************************************/
@@ -505,9 +426,11 @@ function convertToVexFlowFormat(scaleNotes) {
   scaleNotes = generateScaleNotes();
   let numOctString = 3 + parseInt(getSelectedOctaveButton(),10);
 
-  for (const note of scaleNotes) {
+  for (let i = 0; i < scaleNotes.length; i++) {
+
+ 
     // Start from the 4th octave and append the note name
-    const vexFlowNote = note + '/' + numOctString.toString();
+    const vexFlowNote = scaleNotes[i] + '/' + numOctString.toString();
 
     // Add the note to the array
     vexFlowNotes.push(vexFlowNote);
@@ -604,30 +527,30 @@ OBJECTS
 //Object holds all numeric spacing for each scale based on the index there being 12 unique keys.
 //It should be noted that we duplicate the name of the initial key at the end of each octive so the displayed board is 13 keys total. 
 const scaleIntervals = {
-  "major": [0, 2, 4, 5, 7, 9, 11],
-  "natural-minor": [0, 2, 3, 5, 7, 8, 10],
-  "harmonic-minor": [0, 2, 3, 5, 7, 8, 11],
-  "melodic-minor": [0, 2, 3, 5, 7, 9, 11],
-  "dorian": [0, 2, 3, 5, 7, 9, 10],
-  "phrygian": [0, 1, 3, 5, 7, 8, 10],
-  "lydian": [0, 2, 4, 6, 7, 9, 11],
-  "mixolydian": [0, 2, 4, 5, 7, 9, 10],
-  "locrian": [0, 1, 3, 5, 6, 8, 10],
-  "pentatonic-major": [0, 2, 4, 7, 9],
-  "pentatonic-minor": [0, 3, 5, 7, 10],
-  "blues": [0, 3, 5, 6, 7, 10],
-  "whole-tone": [0, 2, 4, 6, 8, 10],
-  "chromatic": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-  "augmented": [0, 3, 4, 7, 8, 11],
-  "diminished": [0, 2, 3, 5, 6, 8, 9, 11],
-  "prometheus": [0, 2, 4, 6, 9, 10],
-  "tritone": [0, 1, 4, 6, 7, 10],
-  "enigmatic": [0, 1, 4, 6, 8, 10, 11],
-  "double-harmonic": [0, 1, 4, 5, 7, 8, 11],
-  "neapolitan-major": [0, 1, 3, 5, 7, 9, 11],
-  "neapolitan-minor": [0, 1, 3, 5, 7, 8, 11],
-  "major-blues": [0, 2, 3, 4, 7, 9],
-  "minor-blues": [0, 3, 5, 6, 7, 10],
-  "exotic": [0, 1, 4, 6, 8, 9, 11]
+  "major": [0, 2, 4, 5, 7, 9, 11,12],
+  "natural-minor": [0, 2, 3, 5, 7, 8, 10,12],
+  "harmonic-minor": [0, 2, 3, 5, 7, 8, 11,12],
+  "melodic-minor": [0, 2, 3, 5, 7, 9, 11,12],
+  "dorian": [0, 2, 3, 5, 7, 9, 10,12],
+  "phrygian": [0, 1, 3, 5, 7, 8, 10,12],
+  "lydian": [0, 2, 4, 6, 7, 9, 11,12],
+  "mixolydian": [0, 2, 4, 5, 7, 9, 10,12],
+  "locrian": [0, 1, 3, 5, 6, 8, 10,12],
+  "pentatonic-major": [0, 2, 4, 7, 9,12],
+  "pentatonic-minor": [0, 3, 5, 7, 10,12],
+  "blues": [0, 3, 5, 6, 7, 10,12],
+  "whole-tone": [0, 2, 4, 6, 8, 10,12],
+  "chromatic": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12],
+  "augmented": [0, 3, 4, 7, 8, 11,12],
+  "diminished": [0, 2, 3, 5, 6, 8, 9, 11,12],
+  "prometheus": [0, 2, 4, 6, 9, 10,12],
+  "tritone": [0, 1, 4, 6, 7, 10,12],
+  "enigmatic": [0, 1, 4, 6, 8, 10, 11,12],
+  "double-harmonic": [0, 1, 4, 5, 7, 8, 11,12],
+  "neapolitan-major": [0, 1, 3, 5, 7, 9, 11,12],
+  "neapolitan-minor": [0, 1, 3, 5, 7, 8, 11,12],
+  "major-blues": [0, 2, 3, 4, 7, 9,12],
+  "minor-blues": [0, 3, 5, 6, 7, 10,12],
+  "exotic": [0, 1, 4, 6, 8, 9, 11,12]
 };
 
