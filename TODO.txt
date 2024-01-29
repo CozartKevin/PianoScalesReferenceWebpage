@@ -1,0 +1,4 @@
+TODO: 
+-Adjust generation & display of notes to accept # of octaves
+-Adjust generation & display of fingering to accept # of ocates
+-Adjust generation & display of VexFLow notes to properly display more octaves (Might not be possible)
