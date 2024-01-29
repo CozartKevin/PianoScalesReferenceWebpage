@@ -1,0 +1,1 @@
+Write up code to progress octaves properly as currently it resets to C4 after reaching G4 and doesn't go to C5 as required
