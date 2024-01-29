@@ -1650,8 +1650,8 @@ const scaleFingerings = {
 },
 "A#":{
   "major": {
-    "leftHand": [5, 4, 3, 2, 1, 3, 2, 1],
-    "rightHand": [1, 2, 3, 1, 2, 3, 4, 5]
+    "leftHand": [2, 1, 2, 3, 1, 2, 3, 4],
+    "rightHand": [4, 1, 2, 3, 1, 2, 3, 4]
   },
   "natural-minor": {
     "leftHand": [5, 4, 3, 2, 1, 3, 2, 1],
