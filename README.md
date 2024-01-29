@@ -1,7 +1,7 @@
 # JavaScript Piano Application
 
 ## Overview
-This project is a JavaScript-driven piano application that provides an interactive virtual piano keyboard with information about scales, fingerings, and notes for 28 different scales in all keys. The application utilizes VexFlow JS for handling musical notes.
+This project is a JavaScript-driven piano application that provides an interactive virtual piano keyboard with information about scales, fingerings, and notes for 28 different scales in all keys. The application utilizes VexFlow JS for handling musical notes.  The hope is to host this on my portfolio website as a free resource for people looking to learn piano scales. 
 
 ## Features
 1. **Interactive Keyboard:** Users can change what key and scale is displayed on the virtual piano keyboard.
@@ -60,7 +60,10 @@ The HTML structure includes the piano keyboard and scale information layout.
 - VexFlow JS
 
 ## Future Improvements
-Explore potential future enhancements for the project.
+1. Fix note generation of VexFlow so that it doesn't reset to C4 after G4 (In process Improvement)
+2. Host on profile website as a free resource for people learning piano.
+3. Enable the keyboard to display scales and fingerings for 1, 2 and 3 Octaves (In process Improvemnt)
+4. Add the ability to click the scales to hear the notes (Theoretical Improvement)
 
 ## Contributions
 Currently, we are not accepting contributions to this project. This may change in the future. If you have suggestions or find issues, feel free to open an issue, but please note that we may not actively review or merge pull requests.
