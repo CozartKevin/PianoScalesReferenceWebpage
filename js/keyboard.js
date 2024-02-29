@@ -1,26 +1,20 @@
 //HTML for Flat: &#9837
 //HTML for Sharp: &#9839
 
+
 /*******************************
- * SCALE Note Generation
- * Used to generate the notes in the scale based on the starting note and scale type using the scale interval section
+ * Initialize Music App
+ * Function to set up the initial state of the music application by generating scale buttons,
+ * key buttons, and initializing the piano keyboard.
  *******************************/
-function generateScaleNotes(startingNote, scaleType) {
-  const startingNoteIndex = getNoteMapByChar(startingNote);
-  const scaleNotes = [];
-  const intervals = scaleIntervals[scaleType] || scaleIntervals["major"];
-
-  for (const interval of intervals) {
-    const noteIndex = (startingNoteIndex + interval) % 12;
-    console.log(noteIndex);
-    const note = getNoteMapByIndex(noteIndex);
-    scaleNotes.push(note);
-  }
-
-  console.log(scaleNotes + "Scale Notes");
-
-  return scaleNotes;
+function initializeScaleReference(){
+  generateScaleButtons();
+  generateKeyButtons();
+  generatePianoKeyboard();
 }
+
+
+
 
 /*******************************
  * KEYBOARD Layout Function
@@ -29,20 +23,20 @@ function generateScaleNotes(startingNote, scaleType) {
 function generatePianoKeyboard() {
 
  const startingNote = getSelectedKeyButton();
+ console.log (startingNote + " | Starting note in Generate Keybaord")
  const keysPerOctave = getSelectedKeysPerOctave();
  const scaleType = getSelectedScaleButton();
 
-console.log (startingNote + "Starting note in Generate Keybaord")
+ let noteIndex = getNoteMapByChar(startingNote);
+ console.log(noteIndex + " | GetNoteMapByChar");
 
-  const keyboard = document.getElementById("piano-keyboard");
 
-  let noteIndex = getNoteMapByChar(startingNote);
-  console.log(noteIndex + "GetNoteMapByChar");
+const keyboard = document.getElementById("piano-keyboard");
 
   while (keyboard.children.length < keysPerOctave) {
     const note = getNoteMapByIndex(noteIndex);
     const key = document.createElement("div");
-    console.log(note + " NOTE INDEX GOING INTO isBlackkey");
+    console.log(note + "| NOTE INDEX GOING INTO isBlackkey");
 
     key.className = isBlackKey(note) ? "black-key" : "white-key";
     key.id = note;
@@ -66,9 +60,78 @@ console.log (startingNote + "Starting note in Generate Keybaord")
   console.log("Sent to highlightScale(scalenotes) from generatePianoKeyboard");
   highlightScale(generateScaleNotes(startingNote, scaleType));
 
-  generateVexFlowScale();
+  generateVexFlowScale(generateScaleNotes(startingNote, scaleType));
 }
 
+
+/*******************************
+ * Generate VexFlow Code for Scales
+ *******************************/
+function generateVexFlowScale(scaleNotes) {
+  // Get the container element for VexFlow
+  const vexFlowContainer = document.getElementById('vexflow-container');
+
+  // Clear previous VexFlow content
+  vexFlowContainer.innerHTML = '';
+
+  console.log(scaleNotes + " | Scale Notes inside VexFlowScale");
+
+  // VexFlow setup
+  const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
+  const context = renderer.getContext();
+  context.setFont('Arial', 10);
+
+  // Create a stave of width 400 at position 10, 40 with treble clef
+  const stave = new Vex.Flow.Stave(10, 40, 400);
+  stave.addClef('treble');
+
+  // Connect stave to the rendering context and draw
+  stave.setContext(context).draw();
+
+  // Create a voice and add dynamically generated notes
+  const voice = new Vex.Flow.Voice({ num_beats: scaleNotes.length, beat_value: 4 });
+
+  scaleNotes.forEach(note => {
+    const staveNote = new Vex.Flow.StaveNote({
+      keys: [`${note}/4`], // Assuming quarter notes for simplicity
+      duration: 'q'
+    });
+    voice.addTickable(staveNote);
+  });
+
+  // Format and render the voice
+  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
+  voice.draw(context, stave, formatter);
+
+  // Render
+  renderer.resize(500, 200);
+  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
+  //renderer.draw();
+}
+
+
+
+
+/*******************************
+ * SCALE Note Generation
+ * Function to generate the notes in the scale based on the starting note and scale type using the scale interval section
+ *******************************/
+function generateScaleNotes(startingNote, scaleType) {
+  const startingNoteIndex = getNoteMapByChar(startingNote);
+  const scaleNotes = [];
+  const intervals = scaleIntervals[scaleType] || scaleIntervals["major"];
+
+  for (const interval of intervals) {
+    const noteIndex = (startingNoteIndex + interval) % 12;
+    console.log(noteIndex);
+    const note = getNoteMapByIndex(noteIndex);
+    scaleNotes.push(note);
+  }
+
+ // console.log(scaleNotes + " inside Generate Scale Notes");
+
+  return scaleNotes;
+}
 
 /*******************************
  * HIGHLIGHT Scale Function Place Fingerings
@@ -179,52 +242,6 @@ const keys = Object.keys(noteMap);
     buttonContainer.appendChild(button);
   }
   };
-
-
-/*******************************
- * Generate VexFlow Code for Scales
- *******************************/
-function generateVexFlowScale() {
-  // Get the container element for VexFlow
-  const vexFlowContainer = document.getElementById('vexflow-container');
-
-  // Clear previous VexFlow content
-  vexFlowContainer.innerHTML = '';
-
-  const scaleNotes = generateScaleNotes(getSelectedKeyButton(), getSelectedScaleButton());
-
-  // VexFlow setup
-  const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
-  const context = renderer.getContext();
-  context.setFont('Arial', 10);
-
-  // Create a stave of width 400 at position 10, 40 with treble clef
-  const stave = new Vex.Flow.Stave(10, 40, 400);
-  stave.addClef('treble');
-
-  // Connect stave to the rendering context and draw
-  stave.setContext(context).draw();
-
-  // Create a voice and add dynamically generated notes
-  const voice = new Vex.Flow.Voice({ num_beats: scaleNotes.length, beat_value: 4 });
-
-  scaleNotes.forEach(note => {
-    const staveNote = new Vex.Flow.StaveNote({
-      keys: [`${note}/4`], // Assuming quarter notes for simplicity
-      duration: 'q'
-    });
-    voice.addTickable(staveNote);
-  });
-
-  // Format and render the voice
-  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
-  voice.draw(context, stave, formatter);
-
-  // Render
-  renderer.resize(500, 200);
-  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
-  //renderer.draw();
-}
 
 
 
