@@ -20,12 +20,12 @@ function initializeScaleReference() {
  * Function to generate the piano keyboard and VexFlow representation based on the selected key and scale.
  **/
 function generateKeyboardAndVexFlow() {
-  const startingNote = getSelectedKeyButton();
-  const scaleType = getSelectedScaleButton();
-
   // Generate piano keyboard
   generatePianoKeyboard();
-
+  
+  console.log("Sent to highlightScale(scalenotes) from generatePianoKeyboard");
+  // Highlight current scale 
+  highlightScale();
   // Generate VexFlow representation
   generateVexFlowScale();
 }
@@ -85,8 +85,6 @@ console.log (startingNote + "Starting note in Generate Keybaord")
     noteIndex = (noteIndex + 1) % 12;
   }
 
-  console.log("Sent to highlightScale(scalenotes) from generatePianoKeyboard");
-  highlightScale(generateScaleNotes(startingNote, scaleType));
 }
 
 
@@ -141,10 +139,12 @@ function generateVexFlowScale() {
  * Highlight Scale Function Place Fingerings.
  * Function to highlight keys on the piano keyboard and place fingerings.
  */
-function highlightScale(scaleNotes) {
+function highlightScale() {
   console.log("highlightScale(scaleNotes)");
   console.log("-------------------------------");
   const keyboard = document.querySelectorAll(".keyboard .white-key, .keyboard .black-key");
+
+  const scaleNotes = generateScaleNotes(getSelectedKeyButton(), getSelectedScaleButton());
 
   // To get left hand fingering
 const leftHandFingering = getFingering("leftHand");
@@ -559,7 +559,6 @@ function isBlackKey(note) {
  * Delete Piano keyboard
  * Deletes the keyboard completely by using the getElementsById and replacing the internal HTML with an empty string.
  */
-//NOTE: If you uncomment the deletePianoKeyboard in the setSelectedScaleButton and setSelectedKeyButton you remove the smooth animation the highlighting does. Make feature for toggling on and off the animation. 
 function deletePianoKeyboard() {
   const pianoContainer = document.getElementById('piano-keyboard');
   pianoContainer.innerHTML = '';
