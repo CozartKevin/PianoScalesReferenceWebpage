@@ -8,6 +8,8 @@
  * key buttons, and initializing the piano keyboard.
  */
 function initializeScaleReference() {
+  setSelectedKeyButton("C");
+  setSelectedScaleButton("Major");
   generateScaleButtons();
   generateKeyButtons();
   generateKeyboardAndVexFlow();
@@ -127,20 +129,21 @@ function generateVexFlowScale() {
  * Function to highlight keys on the piano keyboard and place fingerings.
  */
 function highlightScale(scaleNotes) {
-  const keyboard = document.querySelectorAll(".keyboard .white-key, .keyboard .black-key");
-
-  const leftHandFingering = scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()].leftHand;
-  const rightHandFingering = scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()].rightHand;
-
-  let counter = 0;
-
   console.log("highlightScale(scaleNotes)");
   console.log("-------------------------------");
-  console.log("Selected Key: " + getSelectedKeyButton());
-  console.log("Selected Scale: " + getSelectedScaleButton());
-  console.log("Left Hand Fingers: " + leftHandFingering);
-  console.log("Right Hand Fingers: " + rightHandFingering);
-  console.log("-------------------------------");
+  const keyboard = document.querySelectorAll(".keyboard .white-key, .keyboard .black-key");
+
+  // To get left hand fingering
+const leftHandFingering = getFingering("leftHand");
+console.log("Left Hand Fingering:", leftHandFingering);
+
+// To get right hand fingering
+const rightHandFingering = getFingering("rightHand");
+console.log("Right Hand Fingering:", rightHandFingering);
+console.log("-------------------------------");
+ 
+
+let counter = 0;
 
   keyboard.forEach((key) => {
     const note = key.id;
@@ -310,7 +313,7 @@ function setSelectedScaleButton(scaleType) {
     console.log("Out:" + scaleType);
 
     // Generate the piano keyboard with the updated scale
-    generateKeyboardAndVexFlow();
+   // generateKeyboardAndVexFlow();
 
   }
 }
@@ -370,7 +373,7 @@ function setSelectedKeyButton(startingNote) {
 
   
  // Generate the piano keyboard with the updated starting key
- generateKeyboardAndVexFlow();
+ //generateKeyboardAndVexFlow();
 }
 
 
@@ -541,20 +544,19 @@ function deletePianoKeyboard() {
   pianoContainer.innerHTML = '';
 }
 
-/*******************************
-FINGERING function
-//TODO: Need to impliment getting the fingerings from the fignerings.js file and load them in the
-// ::BEFORE (Left hand fingerings) & ::AFTER(Right hand fingerings) areas of each highlighted key.  
-*******************************/
 
 /**
- * Get Left Fingerings
- * Gets the left hand fingerings for the selected key and scale.
+ * Get Fingerings for the selected key and scale.
  *
- * @returns {number[]} An array of left hand fingerings.
+ * @param {string} hand - Specifies leftHand or rightHand.
+ * @returns {number[]} An array of fingerings. Defaults to leftHand so there is no NULL return.
  */
-function getLeftFingerings() {
-  return scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()].lefthand;
+function getFingering(hand) {
+  // Destructure the scaleFingerings object
+  const { leftHand, rightHand } = scaleFingerings[getSelectedKeyButton()][getSelectedScaleButton()];
+
+  // Return the appropriate hand's fingering
+  return hand === "leftHand" ? leftHand : rightHand;
 }
 
 /*******************************
