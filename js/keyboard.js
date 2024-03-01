@@ -30,6 +30,19 @@ function generateKeyboardAndVexFlow() {
   generateVexFlowScale();
 }
 
+
+/**
+ * Update Piano Keyboard
+ * Function to delete the existing piano keyboard and generate a new one based on the selected key and scale.
+ */
+function updateKeyboard() {
+  // Delete the existing piano keyboard
+  deletePianoKeyboard();
+
+  // Generate a new piano keyboard and VexFlow representation
+  generateKeyboardAndVexFlow();
+}
+
 /**
  * Generate Piano Keyboard
  * Function to generate the piano keyboard based on the selected key and scale.
@@ -187,7 +200,7 @@ function generateScaleButtons() {
     button.id = `${scale}ScaleButton`;
     button.className = 'button-scale';
     button.textContent = scale;
-    button.onclick = () => setSelectedScaleButton(scale);
+    button.onclick = () => handleScaleButtonClick(scale);
 
     // Append the button to the container
     buttonContainer.appendChild(button);
@@ -236,7 +249,7 @@ const keys = Object.keys(noteMap);
       button.textContent = key;
     }
 
-    button.onclick = () => setSelectedKeyButton(key);
+    button.onclick = () => handleKeyButtonClick(key);
 
     // Append the button to the container
     buttonContainer.appendChild(button);
@@ -284,6 +297,16 @@ function generateScaleNotes(startingNote, scaleType) {
  * SCALE Button set and get functions
  *******************************/
 
+/**
+ * Handles the click event for a scale button.
+ *
+ * @param {string} selectedScale - The selected scale associated with the clicked scale button.
+ * @returns {void}
+ */
+function handleScaleButtonClick(selectedScale) {
+  setSelectedScaleButton(selectedScale);
+  updateKeyboard(selectedScale);
+}
 
 /**
  * Sets the selected ScaleType as Active.
@@ -301,20 +324,12 @@ function setSelectedScaleButton(scaleType) {
   // Get the currently selected key
   const keyNote = getSelectedKeyButton();
 
-   // Delete previous piano to generate the next one starting at the startingNote
-   //deletePianoKeyboard();  - Uncomment this line if you want to remove the "Animation" when changing scales via the buttons (Future toggle option?)
-
-
   // Add highlight to the selected scale button
   const selectedButton = document.getElementById(`${scaleType}ScaleButton`);
   if (selectedButton) {
     selectedButton.classList.add('active');
     selectedButton.disabled = true;
     console.log("Out:" + scaleType);
-
-    // Generate the piano keyboard with the updated scale
-   // generateKeyboardAndVexFlow();
-
   }
 }
 
@@ -349,6 +364,18 @@ function getSelectedScaleButton() {
  *******************************/
 
 /**
+ * Handles the click event for a key button.
+ *
+ * @param {string} startingNote - The starting note associated with the clicked key button.
+ * @returns {void}
+ */
+function handleKeyButtonClick(startingNote) {
+  setSelectedKeyButton(startingNote);
+  updateKeyboard(startingNote);
+}
+
+
+/**
  * Sets the selected KeyType as Active.
  *
  * @param {string} startingNote - The starting note to set as active.
@@ -360,20 +387,14 @@ function setSelectedKeyButton(startingNote) {
      button.classList.remove('active');
      button.disabled = false;
    });
-  
-   // Delete previous piano to generate the next one starting at the startingNote
-   //deletePianoKeyboard(); - Uncomment this line if you want to remove the "Animation" when changing Keys via the buttons (Future toggle option?)
 
-  // Add highlight to the selected key button
+     // Add highlight to the selected key button
   const selectedButton = document.getElementById(`${startingNote}KeyButton`);
   if (selectedButton) {
     selectedButton.classList.add('active');
     selectedButton.disabled = true;
   }
 
-  
- // Generate the piano keyboard with the updated starting key
- //generateKeyboardAndVexFlow();
 }
 
 
