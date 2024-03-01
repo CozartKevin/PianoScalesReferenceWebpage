@@ -36,14 +36,25 @@
   </body>
   <script>
 
-initializeScaleReference();
+
 
     // Initial generation of the piano keyboard
     // Initial generation of the piano keyboard
     // Generate the piano keyboard starting from note C with 13 keys per octave
     //generatePianoKeyboard("C", 13, "natural-minor");
     // generatePianoKeyboard("C", 13, "major");
+    generateScaleButtons();
+    generateKeyButtons();
+    generatePianoKeyboard();
+
+
+    
+
+
+    document.addEventListener('DOMContentLoaded', function () {
   
+  generateVexFlowScale();
+});
 
 
   </script>
