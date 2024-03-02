@@ -36,40 +36,8 @@
   </body>
   <script>
 
-
-
     // Initial generation of the piano keyboard
-    // Initial generation of the piano keyboard
-    // Generate the piano keyboard starting from note C with 13 keys per octave
-    //generatePianoKeyboard("C", 13, "natural-minor");
-    // generatePianoKeyboard("C", 13, "major");
-    generateScaleButtons();
-    generateKeyButtons();
-    const initialScale = 'major';
-    const initialKey = 'C';
-
-    const initialScaleButton = document.getElementById(`${initialScale}ScaleButton`);
-    initialScaleButton.classList.add('active');
-    initialScaleButton.disabled = true;
-
-    const initialKeyButton = document.getElementById(`${initialKey}KeyButton`);
-    initialKeyButton.classList.add('active');
-    initialKeyButton.disabled = true;
-
-    const initialKeysPerOctave = 13;
-
-    generatePianoKeyboard(initialKey, initialKeysPerOctave, initialScale);
-
-
-    
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-  
-  generateVexFlowScale();
-});
-
-
+    initializeScaleReference();
   </script>
 
 </html>
