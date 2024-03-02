@@ -11,8 +11,8 @@ function initializeScaleReference() {
   console.log("initialize Scale Reference");
   generateScaleButtons();
   generateKeyButtons();
-  setSelectedKeyButton("C");
   setSelectedScaleButton("major");
+  setSelectedKeyButton("C");
   generateKeyboardAndVexFlow();
 }
 
