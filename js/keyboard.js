@@ -30,10 +30,10 @@ function generateKeyboardAndVexFlow() {
   generatePianoKeyboard(startingNote, scaleType);
 
   // Highlight current scale 
-  highlightScale(startingNote,scaleType);
-  
+  highlightScale(startingNote, scaleType);
+
   // Generate VexFlow representation
-  generateVexFlowScale(startingNote,scaleType);
+  generateVexFlowScale(startingNote, scaleType);
 }
 
 
@@ -56,17 +56,13 @@ function updateKeyboard() {
  *
  */
 function generatePianoKeyboard(startingNote, scaleType) {
-  console.log ("-- Generate Keyboard ")
+  console.log("-- Generate Keyboard ")
 
-
-
- const keysPerOctave = getSelectedKeysPerOctave();
-
-
+  const keysPerOctave = getSelectedKeysPerOctave();
   const keyboard = document.getElementById("piano-keyboard");
 
   let noteIndex = getNoteMapByChar(startingNote);
-  
+
   while (keyboard.children.length < keysPerOctave) {
     const note = getNoteMapByIndex(noteIndex);
     const key = document.createElement("div");
@@ -98,7 +94,7 @@ function generatePianoKeyboard(startingNote, scaleType) {
  * Function to generate the VexFlow representation of scales.
  */
 function generateVexFlowScale(startingNote, scaleType) {
-  console.log ("-- Generate Vex flow Scale")
+  console.log("-- Generate Vex flow Scale")
 
   // Get the container element for VexFlow
   const vexFlowContainer = document.getElementById('vexflow-container');
@@ -146,15 +142,15 @@ function generateVexFlowScale(startingNote, scaleType) {
  * Highlight Scale Function Place Fingerings.
  * Function to highlight keys on the piano keyboard and place fingerings.
  */
-function highlightScale(startingNote,scaleType) {
+function highlightScale(startingNote, scaleType) {
   console.log("-- highlightScale");
- 
+
   const keyboard = document.querySelectorAll(".keyboard .white-key, .keyboard .black-key");
   const scaleNotes = generateScaleNotes(startingNote, scaleType);
 
   const { leftHand, rightHand } = scaleFingerings[startingNote][scaleType];
- 
-let counter = 0;
+
+  let counter = 0;
 
   keyboard.forEach((key) => {
     const note = key.id;
@@ -225,8 +221,8 @@ function generateKeyButtons() {
 
   // Get the container element to append the buttons
   const buttonContainer = document.querySelector('.button-container-key');
- // Get the keys as an array
-const keys = Object.keys(noteMap);
+  // Get the keys as an array
+  const keys = Object.keys(noteMap);
 
   // Iterate over the keys
   for (let i = 0; i < keys.length; i++) {
@@ -254,7 +250,7 @@ const keys = Object.keys(noteMap);
     // Append the button to the container
     buttonContainer.appendChild(button);
   }
-  };
+};
 
 
 
@@ -320,7 +316,7 @@ function setSelectedScaleButton(scaleType) {
 
   // Remove highlight from all scale buttons and enable them
   const scaleButtons = document.querySelectorAll('.button-scale');
-  
+
   scaleButtons.forEach(button => {
     button.classList.remove('active');
     button.disabled = false;
@@ -346,8 +342,8 @@ function getSelectedScaleButton() {
   const scaleButtons = document.querySelectorAll('.button-scale');
 
   for (const scaleButton of scaleButtons) {
-    if (scaleButton.classList.contains('active')) {  
-        return scaleButton.textContent;
+    if (scaleButton.classList.contains('active')) {
+      return scaleButton.textContent;
     }
   }
 
@@ -383,14 +379,14 @@ function handleKeyButtonClick(startingNote) {
  */
 function setSelectedKeyButton(startingNote) {
   console.log("------ Set key button");
-   // Remove highlight from all key buttons and enable them
-   const keyButtons = document.querySelectorAll('.button-key');
-   keyButtons.forEach(button => {
-     button.classList.remove('active');
-     button.disabled = false;
-   });
+  // Remove highlight from all key buttons and enable them
+  const keyButtons = document.querySelectorAll('.button-key');
+  keyButtons.forEach(button => {
+    button.classList.remove('active');
+    button.disabled = false;
+  });
 
-     // Add highlight to the selected key button
+  // Add highlight to the selected key button
   const selectedButton = document.getElementById(`${startingNote}KeyButton`);
   if (selectedButton) {
     selectedButton.classList.add('active');
@@ -416,7 +412,7 @@ function getSelectedKeyButton() {
       return keyName;
     }
   }
-    // Sets and returns Default key of C if no active scale button is found
+  // Sets and returns Default key of C if no active scale button is found
   setSelectedKeyButton('C');
   return 'C'; // Default starting note
 }
@@ -509,7 +505,7 @@ function getNoteMapByChar(noteChar) {
 
   return noteIndex;
 }
-  
+
 /**
  * Get Note Map by index
  * Doesn't reference flat keys as the indexing is the same as sharps.
