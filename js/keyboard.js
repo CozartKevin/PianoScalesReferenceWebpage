@@ -12,7 +12,7 @@ function initializeScaleReference() {
   generateScaleButtons();
   generateKeyButtons();
   setSelectedKeyButton("C");
-  setSelectedScaleButton("Major");
+  setSelectedScaleButton("major");
   generateKeyboardAndVexFlow();
 }
 
@@ -316,23 +316,25 @@ function handleScaleButtonClick(selectedScale) {
  * @param {string} scaleType - The type of scale to set as active.
  */
 function setSelectedScaleButton(scaleType) {
-  console.log("-----Set selected Scale button");
+
+  //Prevent incorrect matching of capitolizations
+  const sanitizedScaleType = scaleType.toLowerCase();
+
   // Remove highlight from all scale buttons and enable them
   const scaleButtons = document.querySelectorAll('.button-scale');
+    console.log(scaleButtons + " What is scaleButtons")
   scaleButtons.forEach(button => {
     button.classList.remove('active');
     button.disabled = false;
   });
 
-  // Get the currently selected key
-  const keyNote = getSelectedKeyButton();
 
   // Add highlight to the selected scale button
   const selectedButton = document.getElementById(`${scaleType}ScaleButton`);
+  console.log(selectedButton + "- SelectedButton - " + `${scaleType}ScaleButton` )
   if (selectedButton) {
     selectedButton.classList.add('active');
     selectedButton.disabled = true;
-    console.log("Out:" + scaleType);
   }
 }
 
@@ -347,11 +349,13 @@ function getSelectedScaleButton() {
   const scaleButtons = document.querySelectorAll('.button-scale');
 
   for (const scaleButton of scaleButtons) {
-    if (scaleButton.classList.contains('active')) {
-        return scaleButton.textContent;
+    const sanitizedScaleButton = scaleButton.textContent.toLowerCase();
+    if (sanitizedScaleButton.classList.contains('active')) {  
+        return sanitizedScaleButton.textContent;
     }
   }
 
+  console.log("-Did not find Scale Active: ");
   // Sets and returns Default scale of major if no active scale button is found
   setSelectedScaleButton('major');
   return 'major';
