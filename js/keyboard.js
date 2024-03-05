@@ -214,7 +214,7 @@ function generateOctaveButtons() {
   const buttonContainer = document.querySelector('.button-container-octave');
 
   // Iterate over the scaleIntervals object
-  for (let i = 1; i < 4; i++) {
+  for (let i = 1; i < 3; i++) { // Increase here to have more octave
     // Create a new button element
     const button = document.createElement('button');
 
@@ -252,11 +252,14 @@ function generateVexFlowScale(startingNote, scaleType) {
 
   // VexFlow setup
   const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
+  
+  renderer.resize(720,300);
   const context = renderer.getContext();
+
   context.setFont('Arial', 10);
 
   // Create a stave of width 400 at position 10, 40 with treble clef
-  const stave = new Vex.Flow.Stave(10, 40, 400);
+  const stave = new Vex.Flow.Stave(1, 30, 550);
   stave.addClef('treble');
 
   // Connect stave to the rendering context and draw
@@ -280,12 +283,12 @@ function generateVexFlowScale(startingNote, scaleType) {
   });
 
   // Format and render the voice
-  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
+  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 500);
   voice.draw(context, stave, formatter);
 
   // Render
-  renderer.resize(500, 200);
-  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
+
+  renderer.getContext().scale(1.25,1.25); // Adjust scale as needed
 }
 
 

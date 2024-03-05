@@ -189,6 +189,23 @@
       color: #fff;
     }
 
+    .button-octave {
+      padding: 10px 20px;
+      margin-right: 10px;
+      font-size: 20px;
+      font-weight: 500px;
+      border: none;
+      border-radius: 4px;
+      background-color: #f0f0f0;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .button-octave.active {
+      background-color: #333;
+      color: #fff;
+    }
+
     .button:hover {
       background-color: #dddddd;
     }
