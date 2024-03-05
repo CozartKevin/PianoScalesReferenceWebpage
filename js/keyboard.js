@@ -88,11 +88,13 @@ function generatePianoKeyboard(startingNote, scaleType) {
 
 }
 
-
+/*NOTE FROM MAIN:
 /**
  * Generate VexFlow Code for Scales.
  * Function to generate the VexFlow representation of scales.
  */
+
+/*
 function generateVexFlowScale(startingNote, scaleType) {
   console.log("-- Generate Vex flow Scale")
 
@@ -136,7 +138,7 @@ function generateVexFlowScale(startingNote, scaleType) {
   renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
   //renderer.draw();
 }
-
+*/
 
 /**
  * Highlight Scale Function Place Fingerings.
@@ -252,18 +254,27 @@ function generateKeyButtons() {
   }
 };
 
+/* NOTE FROM VEXFLow Branch
+
+
 
 /*******************************
  * Generate VexFlow Code for Scales
  *******************************/
-function generateVexFlowScale() {
+function generateVexFlowScale(startingNote, scaleType) {
+
+  const {Renderer, Stave, StaveNote, Accidental, Formatter} = Vex.Flow;
   // Get the container element for VexFlow
   const vexFlowContainer = document.getElementById('vexflow-container');
 
   // Clear previous VexFlow content
   vexFlowContainer.innerHTML = '';
 
-  const scaleNotes = generateScaleNotes(getSelectedKeyButton(), getSelectedScaleButton());
+  const scaleNotes = generateScaleNotes(startingNote, scaleType);
+  const convertedScaleNotes = convertToVexFlowFormat(scaleNotes);
+
+  console.log(scaleNotes + " : SCALE NOTES for VexFlow");
+  console.log(convertedScaleNotes + ": CONVERTED SCALE NOTES for VexFlow");
 
   // VexFlow setup
   const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
@@ -272,19 +283,25 @@ function generateVexFlowScale() {
 
   // Create a stave of width 400 at position 10, 40 with treble clef
   const stave = new Vex.Flow.Stave(10, 40, 400);
-  stave.addClef('treble').addTimeSignature('4/4');
+  stave.addClef('treble');
 
   // Connect stave to the rendering context and draw
   stave.setContext(context).draw();
 
   // Create a voice and add dynamically generated notes
-  const voice = new Vex.Flow.Voice({ num_beats: scaleNotes.length, beat_value: 4 });
+  const voice = new Vex.Flow.Voice({ num_beats: convertedScaleNotes.length, beat_value: 4 });
 
-  scaleNotes.forEach(note => {
+  convertedScaleNotes.forEach(note => {
     const staveNote = new Vex.Flow.StaveNote({
-      keys: [`${note}/4`], // Assuming quarter notes for simplicity
+      keys: [note], // Using the converted VexFlow notes directly
       duration: 'q'
     });
+
+    if (note.includes('#')) {
+      staveNote.addModifier(new Accidental('#'));
+    }
+
+    // Adding the stave note to the voice
     voice.addTickable(staveNote);
   });
 
@@ -295,11 +312,7 @@ function generateVexFlowScale() {
   // Render
   renderer.resize(500, 200);
   renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
-  
 }
-
-
-
 
 
 
@@ -322,6 +335,7 @@ Helper Functions
 function generateScaleNotes(startingNote, scaleType) {
   console.log("----- Generate Scale Notes");
   const startingNoteIndex = getNoteMapByChar(startingNote);
+
   const scaleNotes = [];
   const intervals = scaleIntervals[scaleType] || scaleIntervals["major"];
 
@@ -330,6 +344,8 @@ function generateScaleNotes(startingNote, scaleType) {
     const note = getNoteMapByIndex(noteIndex);
     scaleNotes.push(note);
   }
+
+  scaleNotes.push(startingNote);
 
   return scaleNotes;
 }
@@ -483,19 +499,33 @@ function extractKeyFromButtonText(buttonID) {
  * @returns {string[]} An array of notes in VexFlow format.
  */
 function convertToVexFlowFormat(scaleNotes) {
-  console.log("----- Conver to vexFlow Format");
+  console.log("----- Convert to VexFlow Format");
   const vexFlowNotes = [];
 
-  for (const note of scaleNotes) {
-    // Start from the 4th octave and append the note name
-    const vexFlowNote = note + '4/q';
+  let octave = 4;
+
+  for (let i = 0; i < scaleNotes.length; i++) {
+    // Check for 'C' or 'C#' and not the first note
+    if (i !== 0 && (scaleNotes[i] === 'C' || scaleNotes[i] === 'C#')) {
+      // Avoid double increment by checking the previous note
+      if (scaleNotes[i - 1] !== 'C' && scaleNotes[i - 1] !== 'C#') {
+        octave++;
+      }
+    }
+
+  
+
+    // Append the note name and octave to the VexFlow format
+    const vexFlowNote = `${scaleNotes[i]}/${octave}`;
 
     // Add the note to the array
     vexFlowNotes.push(vexFlowNote);
   }
+  console.log(vexFlowNotes);
 
   return vexFlowNotes;
 }
+
 
 /*******************************
 Octive Button set and get functions
