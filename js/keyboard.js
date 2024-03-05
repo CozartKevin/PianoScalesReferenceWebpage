@@ -11,8 +11,7 @@ function initializeScaleReference() {
   console.log("initialize Scale Reference");
   generateScaleButtons();
   generateKeyButtons();
-  setSelectedScaleButton("major");
-  setSelectedKeyButton("C");
+  generateOctaveButtons();
   generateKeyboardAndVexFlow();
 }
 
@@ -58,7 +57,7 @@ function updateKeyboard() {
 function generatePianoKeyboard(startingNote, scaleType) {
   console.log("-- Generate Keyboard ")
 
-  const keysPerOctave = getSelectedKeysPerOctave();
+  const keysPerOctave = getKeysPerOctive();
   const keyboard = document.getElementById("piano-keyboard");
 
   let noteIndex = getNoteMapByChar(startingNote);
@@ -202,6 +201,9 @@ function generateScaleButtons() {
     // Append the button to the container
     buttonContainer.appendChild(button);
   }
+
+  //Set Default selected scale button
+  setSelectedScaleButton("major");
 }
 
 
@@ -252,7 +254,41 @@ function generateKeyButtons() {
     // Append the button to the container
     buttonContainer.appendChild(button);
   }
+
+  //set Defautl selected Key button
+  setSelectedKeyButton("C");
 };
+
+
+
+
+/**
+ * OCTAVE Button Generation.
+ * Function sets up the initial Octave Buttons in the "Options" Menu under heading "Octaves:"
+ */
+function generateOctaveButtons() {
+  console.log("----- Generate Octave buttons");
+  // Get the container element to append the buttons
+  const buttonContainer = document.querySelector('.button-container-octave');
+
+  // Iterate over the scaleIntervals object
+  for (let i = 1; i < 4; i++) {
+    // Create a new button element
+    const button = document.createElement('button');
+
+    // Set the button properties
+    button.id = `${i}OctaveButton`;
+    button.className = 'button-octave';
+    button.textContent = i;
+    button.onclick = () => handleOctaveButtonClick(i);
+
+    // Append the button to the container
+    buttonContainer.appendChild(button);
+  }
+
+  //Set default octave button
+  setSelectedOctaveButton("1");
+}
 
 /* NOTE FROM VEXFLow Branch
 
@@ -426,13 +462,13 @@ function getSelectedScaleButton() {
 /**
  * Handles the click event for a key button.
  *
- * @param {string} startingNote - The starting note associated with the clicked key button.
+ * @param {string} selectedKey - The starting note associated with the clicked key button.
  * @returns {void}
  */
-function handleKeyButtonClick(startingNote) {
+function handleKeyButtonClick(selectedKey) {
   console.log("-----handle key button clicks");
-  setSelectedKeyButton(startingNote);
-  updateKeyboard(startingNote);
+  setSelectedKeyButton(selectedKey);
+  updateKeyboard(selectedKey);
 }
 
 
@@ -491,6 +527,68 @@ function extractKeyFromButtonText(buttonID) {
 }
 
 
+
+/*******************************
+ * Octave Button set and get functions
+ *******************************/
+
+/**
+ * Handles the click event for a key button.
+ *
+ * @param {string} selectedOctave - The starting note associated with the clicked key button.
+ * @returns {void}
+ */
+function handleOctaveButtonClick(selectedOctave) {
+  console.log("-----handle key button clicks");
+  setSelectedOctaveButton(selectedOctave);
+  updateKeyboard(selectedOctave);
+}
+
+
+/**
+ * Sets the selected Octave as Active.
+ *
+ * @param {string} numOctaves - The number of Octaves to display
+ */
+function setSelectedOctaveButton(numOctaves) {
+  console.log("------ Set Octave button");
+  // Remove highlight from all key buttons and enable them
+  const keyButtons = document.querySelectorAll('.button-octave');
+  keyButtons.forEach(button => {
+    button.classList.remove('active');
+    button.disabled = false;
+  });
+
+  // Add highlight to the selected key button
+  const selectedButton = document.getElementById(`${numOctaves}OctaveButton`);
+  if (selectedButton) {
+    selectedButton.classList.add('active');
+    selectedButton.disabled = true;
+  }
+
+}
+
+
+/**
+ * Gets the current Active KeyType.
+ * It splits out the sharp and flats and uses the Sharp name for the note.
+ *
+ * @returns {string} The active key type.
+ */
+function getSelectedOctaveButton() {
+  console.log("---- get selected key button");
+  const octaveButtons = document.querySelectorAll('.button-Octave');
+  for (const octaveButton of octaveButtons) {
+    if (octaveButton.classList.contains('active')) {
+      return octaveButton.textContent;
+    }
+  }
+
+}
+
+
+
+
 /**
  * Convert To VexFlow Format
  * Converts output from generateScaleNotes into a format that VexFlow can recognize in a voice.
@@ -502,7 +600,14 @@ function convertToVexFlowFormat(scaleNotes) {
   console.log("----- Convert to VexFlow Format");
   const vexFlowNotes = [];
 
-  let octave = 4;
+
+  let octave = getSelectedOctaveButton();
+  //Sets starting Octave to 4 if we want 1 or 2 octaves displayed this is so we start at middle C4
+  //if we want 3 octaves we set the starting note in octave 3 area not 4 so we have 3 octaves of travel on the treble clef
+  if(octave === 1 || octave === 2){
+    octave = 4;
+  }
+  
 
   for (let i = 0; i < scaleNotes.length; i++) {
     // Check for 'C' or 'C#' and not the first note
@@ -542,7 +647,7 @@ Octive Button set and get functions
  *
  * @returns {number} The number of keys per octave.
  */
-function getSelectedKeysPerOctave() {
+function getKeysPerOctive() {
   console.log("----- get selected keys per octave");
   return 13; // Default value
 }
