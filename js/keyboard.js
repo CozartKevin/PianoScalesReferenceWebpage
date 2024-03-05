@@ -577,7 +577,7 @@ function setSelectedOctaveButton(numOctaves) {
  */
 function getSelectedOctaveButton() {
   console.log("---- get selected key button");
-  const octaveButtons = document.querySelectorAll('.button-Octave');
+  const octaveButtons = document.querySelectorAll('.button-octave');
   for (const octaveButton of octaveButtons) {
     if (octaveButton.classList.contains('active')) {
       return octaveButton.textContent;
@@ -602,12 +602,14 @@ function convertToVexFlowFormat(scaleNotes) {
 
 
   let octave = getSelectedOctaveButton();
+  console.log(octave + " Octave Number Before If")
   //Sets starting Octave to 4 if we want 1 or 2 octaves displayed this is so we start at middle C4
   //if we want 3 octaves we set the starting note in octave 3 area not 4 so we have 3 octaves of travel on the treble clef
-  if(octave === 1 || octave === 2){
+  if(octave === '1' || octave === '2'){
+    console.log("Inside if of octave");
     octave = 4;
   }
-  
+  console.log(octave + " Octave Number After If")
 
   for (let i = 0; i < scaleNotes.length; i++) {
     // Check for 'C' or 'C#' and not the first note
@@ -666,7 +668,7 @@ NOTE Mapping Get functions
  * @returns {number} The index of the note.
  */
 function getNoteMapByChar(noteChar) {
-  console.log("-------- Get Note map by char");
+  //console.log("-------- Get Note map by char");
   const charNoteMap = {
     "C": 0,
     "C#": 1,
@@ -698,7 +700,7 @@ function getNoteMapByChar(noteChar) {
  * @returns {string} The note name.
  */
 function getNoteMapByIndex(noteIndex) {
-  console.log("-------- get Note map by Index");
+  //console.log("-------- get Note map by Index");
   const indexNoteMap = {
     0: "C",
     1: "C#",
@@ -725,7 +727,7 @@ function getNoteMapByIndex(noteIndex) {
  * @returns {boolean} True if the note is a black key, false otherwise.
  */
 function isBlackKey(note) {
-  console.log("--------  is black key");
+  //console.log("--------  is black key");
   return note.includes("#") || note.includes("b");
 }
 
