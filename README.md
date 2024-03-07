@@ -60,7 +60,7 @@ The HTML structure includes the piano keyboard and scale information layout.
 - VexFlow JS
 
 ## Future Improvements
-1. Enable the keyboard to display scales and fingerings for 1 and 2 Octaves (Implemented)
+1. Enable the keyboard to display scales and fingerings for 1 and 2 Octaves (Implemented in Multiple-Octaves_After-Main-Refactor Branch Not merged into Main yet)
 2. Adjust formatting and page layout of buttons, vexflow and piano for readability
 3. Create Dark Mode toggle button
 5. Add the ability to click the scales to hear the notes (Theoretical Improvement)
