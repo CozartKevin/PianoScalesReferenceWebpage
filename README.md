@@ -60,10 +60,11 @@ The HTML structure includes the piano keyboard and scale information layout.
 - VexFlow JS
 
 ## Future Improvements
-1. Fix note generation of VexFlow so that it doesn't reset to C4 after G4 (In process Improvement)
-2. Host on profile website as a free resource for people learning piano.
-3. Enable the keyboard to display scales and fingerings for 1, 2 and 3 Octaves (In process Improvemnt)
-4. Add the ability to click the scales to hear the notes (Theoretical Improvement)
+1. Enable the keyboard to display scales and fingerings for 1 and 2 Octaves (Implemented)
+2. Adjust formatting and page layout of buttons, vexflow and piano for readability
+3. Create Dark Mode toggle button
+5. Add the ability to click the scales to hear the notes (Theoretical Improvement)
+6. Host on profile website as a free resource for people learning piano.
 
 ## Contributions
 Currently, we are not accepting contributions to this project. This may change in the future. If you have suggestions or find issues, feel free to open an issue, but please note that we may not actively review or merge pull requests.
