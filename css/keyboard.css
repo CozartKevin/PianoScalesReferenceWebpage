@@ -1,221 +1,262 @@
-    /* CSS code for piano keyboard */
-    :root {
-      --white-key-width: calc(40px * 1.5);
-      --white-key-height: calc(200px * 1.5);
-      --black-key-width: calc(25px * 1.5);
-      --black-key-height: calc(120px * 1.5);
-      --note-label-font-size: calc(15px * 1.5);
-    }
+/* CSS code for piano keyboard */
+:root {
+  --white-key-width: calc(40px * 1.5);
+  --white-key-height: calc(200px * 1.5);
+  --black-key-width: calc(25px * 1.5);
+  --black-key-height: calc(120px * 1.5);
+  --note-label-font-size: calc(15px * 1.5);
+}
 
-    .container {
-      display: flex;
-      justify-content: center;
-      height: 100%;
-    }
+.container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
 
-    .keyboard {
-      display: flex;
-      height: 30vh;
-    }
+.keyboard {
+  display: flex;
+  height: 30vh;
+}
 
-    .row {
-      display: flex;
-    }
+.row {
+  display: flex;
+}
 
-    .white-key {
-      width: var(--white-key-width);
-      height: var(--white-key-height);
-      background-color: white;
-      border: 1px solid #ccc;
-      display: flex;
-      border-radius: 2px;
-      margin-right: 2px;
-      position: relative;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.2s ease-in-out;
-      cursor: pointer;
-      justify-content: center;
-    }
+.white-key {
+  width: var(--white-key-width);
+  height: var(--white-key-height);
+  background-color: white;
+  border: 1px solid #ccc;
+  display: flex;
+  border-radius: 2px;
+  margin-right: 2px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+  justify-content: center;
+}
 
-    .black-key {
-      width: var(--black-key-width);
-      height: var(--black-key-height);
-      background-color: black;
-      border: 1px solid #333;
-      display:flex;
-      border-radius: 2px;
-      margin-left: calc(-0.65 * var(--white-key-width)/2);
-      margin-right: calc(-0.65 * var(--white-key-width)/2);
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-      transition: background-color 0.2s ease-in-out;
-      cursor: pointer;
-      justify-content: center;
-    }
+.black-key {
+  width: var(--black-key-width);
+  height: var(--black-key-height);
+  background-color: black;
+  border: 1px solid #333;
+  display: flex;
+  border-radius: 2px;
+  margin-left: calc(-0.65 * var(--white-key-width) / 2);
+  margin-right: calc(-0.65 * var(--white-key-width) / 2);
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+  justify-content: center;
+}
 
-    .scale-highlight {
-      background-color: yellow;
-    }
+.scale-highlight {
+  background-color: yellow;
+}
 
-    .note-label {
-      display: flex;
-      color: black;
-      font-size: var(--note-label-font-size);
-      visibility: hidden;
-      flex-wrap: wrap;
-      align-content: center;
-      justify-content: center;
-      align-items: center;
-      position:inherit;
-    }
-
-    .note-label::before {
-      content: var(--before-content, "");
-      display: flex;
-      font-weight: 500;
-      line-height: 1em;
-      font-size: 0.9em;
-      opacity: 0.75;
-      position:inherit;
-    }
-
-    .note-label::after {
-      content: var(--after-content, "");
-      display: flex;
-      font-weight: 500;
-      line-height: 1em;
-      font-size: 0.9em;
-      opacity: 0.75;
-      position:inherit;
-    }
-
-    .black-key .note-label {
-     }
+.note-label {
  
-     .black-key .note-label::before {
-       top: 4.75em;
-       left:0em;
-     }
+  display: flex;
+  color: black;
+  font-size: var(--note-label-font-size);
+  visibility: hidden;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  position: inherit;
+}
 
-     .black-key .note-label::after{
-      top: 1.75em; 
-      left:0em;
-      
-       
- }
+.note-label::before {
+  content: var(--before-content, "");
+  display: flex;
+  font-weight: 500;
+  line-height: 1em;
+  font-size: 0.9em;
+  opacity: 0.75;
+  position: inherit;
+}
 
+.note-label::after {
+  content: var(--after-content, "");
+  display: flex;
+  font-weight: 500;
+  line-height: 1em;
+  font-size: 0.9em;
+  opacity: 0.75;
+  position: inherit;
+}
 
- .white-key .note-label {
- position:inherit;
- top: -2em;
- left:-0.75em;
- align-content:flex-end;
- }
+.black-key .note-label {}
 
- .white-key .note-label::before {
-   top: 2em;
-   left: 1em;
- }
- .white-key .note-label::after{
-  top: 2em; 
+.black-key .note-label::before {
+  top: 4.75em;
+  left: 0em;
+}
+
+.black-key .note-label::after {
+  top: 1.75em;
+  left: 0em;
+}
+
+.white-key .note-label {
+  top: 50%;
+  left: 50%;
+  transform: translate(-75%, -25%);
+}
+
+.white-key .note-label::before {
+  top: 2em;
+  left: 1em;
+}
+
+.white-key .note-label::after {
+  top: 2em;
   left: 0.7em;
+}
+
+.scale-highlight .note-label {
+  visibility: visible;
+}
+
+.button-container-scale {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.button-container-key {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 0 5px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.button-scale {
+  padding: 5px 10px;
+  margin: 2px;
+  font-size: 24px;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+}
+
+.button-scale.active {
+  background-color: #333;
+  color: #fff;
+}
+
+.button-key {
+  padding: 5px 10px;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+}
+
+.button-key.active {
+  background-color: #333;
+  color: #fff;
+}
+
+.button:hover {
+  background-color: #dddddd;
+}
+
+.button.active {
+  background-color: #333;
+  color: #ffffff;
+}
+
+span {
+  padding-bottom: 1px;
+  border-bottom: 2px solid black;
+  line-height: 30px;
+}
+
+/* CSS code for responsiveness */
+@media screen and (max-width: 600px) {
+  .white-key {
+    width: calc(30px * 1.06);
+    height: calc(150px * 1.06);
+  }
+
+  .black-key {
+    width: calc(20px * 1.06);
+    height: calc(90px * 1.06);
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .note-label {
+    font-size: calc(var(--note-label-font-size) * 0.6); /* Adjust the factor as needed */
+    
+  }
+  .white-key .note-label::before {
+    top: 1em;
+    left: 0.5em;
+  }
+
+  .white-key .note-label::after {
+    top: 1em;
+    left: 0.3em;
+  }
+
+  .black-key .note-label::before {
+    top: 3.75em;
+    left: 0em;
+  }
+
+  .black-key .note-label::after {
+    top: 0.75em;
+    left: 0em;
+  }
+
+  .button {
+    font-size: 14px; /* Adjust the font size for buttons */
+    padding: 8px 15px; /* Adjust padding for buttons */
+  }
+
+  .button-scale {
+    font-size: 18px; /* Adjust the font size for scale buttons */
+    padding: 3px 6px; /* Adjust padding for scale buttons */
+    margin: 1px;
+  }
+
+  .button-key {
+    font-size: 16px; /* Adjust the font size for key buttons */
+    padding: 3px 6px; /* Adjust padding for key buttons */
+    margin-left: 5px;
+  }
+
+  #vexflow-container {
    
+    transform: scale(0.8); /* Adjust the scale factor as needed */
+  }
 }
 
 
-    .scale-highlight .note-label {
-      visibility: visible;
-    }
-
-    .button-container-scale {
-      display: flex;
-      justify-content: Left;
-      margin-bottom: 20px;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-
-    .button-container-key {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-
-    .button {
-      font-size: 16px;
-      padding: 10px 20px;
-      margin: 0 5px;
-      background-color: #ffffff;
-      border: 1px solid #dddddd;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .button-scale {
-      padding: 5px 10px;
-      margin: 2px;
-      font-size: 24px;
-      font-weight: 500px;
-      border: none;
-      border-radius: 4px;
-      background-color: #f0f0f0;
-      color: #333;
-      cursor: pointer;
-    }
-
-    .button-scale.active {
-      background-color: #333;
-      color: #fff;
-    }
-
-    .button-key {
-      padding: 5px 10px;
-      margin-left: 10px;
-      font-size: 20px;
-      font-weight: 500px;
-      border: none;
-      border-radius: 4px;
-      background-color: #f0f0f0;
-      color: #333;
-      cursor: pointer;
-    }
-
-    .button-key.active {
-      background-color: #333;
-      color: #fff;
-    }
-
-    .button:hover {
-      background-color: #dddddd;
-    }
-
-    .button.active {
-      background-color: #333;
-      color: #ffffff;
-    }
-
-
-    span {
-      padding-bottom: 1px;
-      border-bottom: 2px solid black;
-      line-height: 30px;
-    }
-
-    /* CSS code for responsiveness */
-    @media screen and (max-width: 600px) {
-      .white-key {
-        width: calc(30px * 1.06);
-        height: calc(150px * 1.06);
-      }
-
-      .black-key {
-        width: calc(20px * 1.06);
-        height: calc(90px * 1.06);
-        margin-left: -10px;
-        margin-right: -10px;
-      }
-    }
