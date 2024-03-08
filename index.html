@@ -14,7 +14,7 @@
 
 <body>
 
-  <h3>Options:</h3>
+  <h3>Options:</h3><input type="checkbox" id="dark-mode-toggle" class="theme-checkbox"></button>
   <h4> Scales: </h4>
 <div id="Scales" class="Container button-container-scale">
 
@@ -32,7 +32,7 @@
 <div id="piano-keyboard" class="container keyboard">
 
 </div>
-<button id="dark-mode-toggle">Toggle Dark Mode</button>
+
   </body>
   <script>
 
@@ -40,6 +40,7 @@
     initializeScaleReference();
     document.getElementById('dark-mode-toggle').addEventListener('click', function() {
   document.body.classList.toggle('dark-mode');
+
   generateKeyboardAndVexFlow();
 });
   </script>

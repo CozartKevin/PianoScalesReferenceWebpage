@@ -144,6 +144,7 @@ function generateScaleButtons() {
     button.id = `${scale}ScaleButton`;
     button.className = 'button-scale';
     button.textContent = scale;
+    button.classList.add("button-30");
     button.onclick = () => handleScaleButtonClick(scale);
 
     // Append the button to the container
@@ -184,6 +185,7 @@ function generateKeyButtons() {
     // Set the button properties
     button.id = `${key}KeyButton`;
     button.className = 'button-key';
+    button.classList.add("button-30");
 
     // Concatenate note names into the same button with '\'
     if (nextKey && noteMap[key] === noteMap[nextKey]) {
