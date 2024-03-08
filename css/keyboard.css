@@ -7,9 +7,9 @@
   --note-label-font-size: calc(15px * 1.5);
 
   --button-bg: #fff;
-  --button-border: #1A1A1A;
+  --button-border: #3B3B3B;
   --button-color: #1A1A1A;
-  --button-hover-bg: #3B3B3B;
+  --button-hover-bg: #3B3B3B
   --button-hover-color: #fff;
   --button-active-color: #fff;
   --button-active-background-color: #1A1A1A;
@@ -22,12 +22,12 @@ body.dark-mode {
   color: #ffffff;
   /* Add other dark mode styles here */
   --button-bg: #3B3B3B;
-  --button-border: #3B3B3B;
+ 
   --button-color: #fff;
-  --button-hover-bg: #1A1A1A;
-  --button-hover-color: #fff;
-  --button-active-color: #1A1A1A;
-  --button-active-background-color: #fff
+  --button-hover-bg: #fff;
+  --button-hover-color: #1a1a1a;
+  --button-active-color: #fff;
+  --button-active-background-color: #1a1a1a
 }
 
 body {
