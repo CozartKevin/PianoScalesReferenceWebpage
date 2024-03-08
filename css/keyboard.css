@@ -5,6 +5,15 @@
   --black-key-width: calc(25px * 1.5);
   --black-key-height: calc(120px * 1.5);
   --note-label-font-size: calc(15px * 1.5);
+
+  --button-bg: #fff;
+  --button-border: #1A1A1A;
+  --button-color: #1A1A1A;
+  --button-hover-bg: #3B3B3B;
+  --button-hover-color: #fff;
+  --button-active-color: #fff;
+  --button-active-background-color: #1A1A1A;
+
 }
 
 
@@ -12,6 +21,13 @@ body.dark-mode {
   background-color: #1a1a1a;
   color: #ffffff;
   /* Add other dark mode styles here */
+  --button-bg: #3B3B3B;
+  --button-border: #3B3B3B;
+  --button-color: #fff;
+  --button-hover-bg: #1A1A1A;
+  --button-hover-color: #fff;
+  --button-active-color: #1A1A1A;
+  --button-active-background-color: #fff
 }
 
 body {
@@ -174,8 +190,9 @@ body {
 }
 
 .button-scale.active {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--button-active-background-color);
+  color: var(--button-active-color); 
+  
 }
 
 .button-key {
@@ -196,7 +213,8 @@ body {
 }
 
 .button:hover {
-  background-color: #dddddd;
+  color: var(--button-hover-color);
+  background-color: var(--button-hover-bg);
 }
 
 .button.active {
@@ -205,14 +223,13 @@ body {
 }
 
 /* Original Button code by e-coders on uiverse.io  URL: https://uiverse.io/e-coders/new-shrimp-32 */
-
 .button-30 {
   appearance: none;
-  background-color: transparent;
-  border: 0.125em solid #1A1A1A;
+  background-color: var(--button-bg);
+  border: 0.125em solid var(--button-border);
   border-radius: 0.9375em;
   box-sizing: border-box;
-  color: #3B3B3B;
+  color: var(--button-color);
   cursor: pointer;
   display: inline-block;
   font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
@@ -231,23 +248,23 @@ body {
   -webkit-user-select: none;
   touch-action: manipulation;
   will-change: transform;
- }
- 
- .button-30:disabled {
+}
+
+.button-30:disabled {
   pointer-events: none;
- }
- 
- .button-30:hover {
-  color: #fff;
-  background-color: #1A1A1A;
+}
+
+.button-30:hover {
+  color: var(--button-hover-color);
+  background-color: var(--button-hover-bg);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
- }
- 
- .button-30:active {
+}
+
+.button-30:active {
   box-shadow: none;
   transform: translateY(0);
- }
+}
 
 
  /* Original Theme checkbox by CUZPQ on universe.io   URL: https://uiverse.io/cuzpq/gentle-goat-72 */
