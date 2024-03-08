@@ -87,59 +87,6 @@ function generatePianoKeyboard(startingNote, scaleType) {
   }
 
 }
-
-/*NOTE FROM MAIN:
-/**
- * Generate VexFlow Code for Scales.
- * Function to generate the VexFlow representation of scales.
- */
-
-/*
-function generateVexFlowScale(startingNote, scaleType) {
-  console.log("-- Generate Vex flow Scale")
-
-  // Get the container element for VexFlow
-  const vexFlowContainer = document.getElementById('vexflow-container');
-
-  // Clear previous VexFlow content
-  vexFlowContainer.innerHTML = '';
-
-  const scaleNotes = generateScaleNotes(startingNote, scaleType);
-
-  // VexFlow setup
-  const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
-  const context = renderer.getContext();
-  context.setFont('Arial', 10);
-
-  // Create a stave of width 400 at position 10, 40 with treble clef
-  const stave = new Vex.Flow.Stave(10, 40, 400);
-  stave.addClef('treble');
-
-  // Connect stave to the rendering context and draw
-  stave.setContext(context).draw();
-
-  // Create a voice and add dynamically generated notes
-  const voice = new Vex.Flow.Voice({ num_beats: scaleNotes.length, beat_value: 4 });
-
-  scaleNotes.forEach(note => {
-    const staveNote = new Vex.Flow.StaveNote({
-      keys: [`${note}/4`], // Assuming quarter notes for simplicity
-      duration: 'q'
-    });
-    voice.addTickable(staveNote);
-  });
-
-  // Format and render the voice
-  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
-  voice.draw(context, stave, formatter);
-
-  // Render
-  renderer.resize(500, 200);
-  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
-  //renderer.draw();
-}
-*/
-
 /**
  * Highlight Scale Function Place Fingerings.
  * Function to highlight keys on the piano keyboard and place fingerings.
@@ -278,18 +225,27 @@ function generateVexFlowScale(startingNote, scaleType) {
 
   // VexFlow setup
   const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
+
+
   const context = renderer.getContext();
   context.setFont('Arial', 10);
 
   // Create a stave of width 400 at position 10, 40 with treble clef
   const stave = new Vex.Flow.Stave(10, 40, 400);
   stave.addClef('treble');
-
+  if(document.body.classList.contains('dark-mode')){
+    
+  }
+ 
   // Connect stave to the rendering context and draw
   stave.setContext(context).draw();
 
+  
+
+
   // Create a voice and add dynamically generated notes
   const voice = new Vex.Flow.Voice({ num_beats: convertedScaleNotes.length, beat_value: 4 });
+
 
   convertedScaleNotes.forEach(note => {
     const staveNote = new Vex.Flow.StaveNote({
@@ -301,17 +257,25 @@ function generateVexFlowScale(startingNote, scaleType) {
       staveNote.addModifier(new Accidental('#'));
     }
 
+    if(document.body.classList.contains('dark-mode')){
+      staveNote.setStyle({ fillStyle: "White", strokeStyle: "white" });
+    }
+  
+
+
     // Adding the stave note to the voice
     voice.addTickable(staveNote);
   });
 
   // Format and render the voice
   const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
+
   voice.draw(context, stave, formatter);
 
   // Render
   renderer.resize(500, 200);
   renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
+
 }
 
 
@@ -633,6 +597,8 @@ function deletePianoKeyboard() {
   const pianoContainer = document.getElementById('piano-keyboard');
   pianoContainer.innerHTML = '';
 }
+
+
 
 /*******************************
 OBJECTS

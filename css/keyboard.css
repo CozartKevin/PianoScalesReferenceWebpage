@@ -7,6 +7,17 @@
   --note-label-font-size: calc(15px * 1.5);
 }
 
+
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  /* Add other dark mode styles here */
+}
+
+body {
+  background-color: white;
+  color: #000000;
+}
 .container {
   display: flex;
   justify-content: center;
