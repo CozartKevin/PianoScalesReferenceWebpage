@@ -5,11 +5,11 @@
   --black-key-width: calc(25px * 1.5);
   --black-key-height: calc(120px * 1.5);
   --note-label-font-size: calc(15px * 1.5);
-
+  --options-Menu-color: #fff;
   --button-bg: #fff;
   --button-border: #3B3B3B;
   --button-color: #1A1A1A;
-  --button-hover-bg: #3B3B3B
+  --button-hover-bg: #3B3B3B;
   --button-hover-color: #fff;
   --button-active-color: #fff;
   --button-active-background-color: #1A1A1A;
@@ -22,7 +22,7 @@ body.dark-mode {
   color: #ffffff;
   /* Add other dark mode styles here */
   --button-bg: #3B3B3B;
- 
+  --options-Menu-color: #1A1A1A;
   --button-color: #fff;
   --button-hover-bg: #fff;
   --button-hover-color: #1a1a1a;
@@ -38,6 +38,7 @@ body {
   display: flex;
   justify-content: center;
   height: 100%;
+  position: relative;
 }
 
 .keyboard {
@@ -150,15 +151,64 @@ body {
   visibility: visible;
 }
 
-.button-container-scale, .button-container-key , .button-container-options {
-  display: flex;
+#scale-container {
+  display:flex; 
+  flex-direction: row; 
+  align-items: flex-start; 
+  justify-content: flex-start;
+}
+
+#key-container {
+  display:flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width:100%
+}
+
+.button-container-scale, .button-container-key{
+  display: none;
   justify-content: left;
   margin-top: 10px;
   margin-bottom: 20px;
-  flex-direction: row;
-  flex-wrap: wrap;
+  padding-left:10px;
+  width:90%;
 }
 
+
+.button-container-scale.active, .button-container-key.active{
+display:flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+
+.button-container-key{
+  width:100%
+}
+
+.button-container-options {
+  position: fixed;
+  top: 10px; /* Adjust the top position for better visibility */
+  left: 90px;
+  z-index: 100; /* Ensure the dropdown is above other elements */
+  background-color: var(--button-bg);
+  margin-left: 2%;
+  margin-right:2%;
+  padding: 0.25%;
+
+display:none;
+  border: 0.125em solid var(--button-border);
+  border-radius: 0.9375em;
+}
+
+.button-container-options.active {
+  display:flex;
+  display:flex;
+  flex-wrap: wrap;
+  background-color: var(--options-Menu-color);
+}
 
 .button {
   font-size: 16px;
@@ -210,7 +260,7 @@ body {
 
 
 /* Original Button code by e-coders on uiverse.io  URL: https://uiverse.io/e-coders/new-shrimp-32 */
-.button-30 {
+.button-30  {
   appearance: none;
   background-color: var(--button-bg);
   border: 0.125em solid var(--button-border);
@@ -277,9 +327,12 @@ body.dark-mode .button-30:hover{
   -o-transition: 0.4s;
   transition: 0.4s;
   border-radius: 99em;
-  position: relative;
+  position: absolute;
   cursor: pointer;
+  top: 82px;
+  left: 29px;
   font-size: var(--toggle-size);
+
 }
 
 .theme-checkbox::before {
@@ -373,9 +426,25 @@ span {
   }
 
   #vexflow-container {
-   
+  
     transform: scale(0.8); /* Adjust the scale factor as needed */
   }
 }
 
+#vexflow-container{
+  position: relative;
+  width: 100%;
+  height: 200px; /* Adjust the height as needed */
 
+  z-index: -1; /* Ensure the keyboard and VexFlow are below other elements */
+ 
+
+
+}
+
+
+#piano-keyboard {
+ margin-top: 10px;
+  z-index: -1; /* Ensure the keyboard is below menue elements */
+
+}

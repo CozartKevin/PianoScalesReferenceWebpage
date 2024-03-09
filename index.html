@@ -14,19 +14,22 @@
 
 <body>
 
-  <button class="button-30" onclick="toggleVisibility('options')"><h3>Options:</h3></button>
+  <button class="button-30" style="display:flex; position:fixed" onclick="toggleMenu('Options')"><h3>Options:</h3></button>
   <input type="checkbox" id="dark-mode-toggle" class="theme-checkbox"></button> 
-  <div id="options" class="Container button-container-options" style="display: none;">
+  <div id="Options" class="Container button-container-options" >
     
-  <button class="button-30" onclick="toggleVisibility('Scales')"> <h4> Scales: </h4></button>
-<div id="Scales" class="Container button-container-scale" style="display: block;">
 
-   
-  </div>
-  <button class="button-30" onclick="toggleVisibility('Key')" ><h4>Keys: </h4></button>
+    <div id="scale-container" >
+  <button class="button-30" onclick="toggleMenu('Scales')"> <h4> Scales: </h4></button>
+  <div id="Scales" class="Container button-container-scale" ></div>
+</div>
+
+<div id="key-container">
+  <button class="button-30" onclick="toggleMenu('Key')" ><h4>Keys: </h4></button>
     
-    <div id="Key" class="button-container-key" style="display: block;">
+    <div id="Key" class="button-container-key">
     </div>
+  </div>
   </div>
 </div>
 <div id="vexflow-container" class="container">
@@ -50,6 +53,16 @@
 function toggleVisibility(containerId) {
     var container = document.getElementById(containerId);
     container.style.display = (container.style.display === 'none' || container.style.display === '') ? 'block' : 'none';
+  }
+  function toggleMenu(containerId) {
+    var menu = document.getElementById(containerId);
+    menu.classList.toggle("active");
+    if(containerId === "Options"){
+      console.log("HERE")
+      toggleMenu("Scales")
+      toggleMenu("Key")
+    }
+
   }
 
   </script>
