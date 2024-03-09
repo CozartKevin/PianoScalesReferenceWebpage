@@ -156,6 +156,7 @@ body {
   flex-direction: row; 
   align-items: flex-start; 
   justify-content: flex-start;
+  padding-right: 4px;
 }
 
 #key-container {
@@ -163,7 +164,7 @@ body {
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  width:100%
+
 }
 
 .button-container-scale, .button-container-key{
