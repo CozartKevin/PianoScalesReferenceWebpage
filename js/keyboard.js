@@ -263,8 +263,6 @@ function generateVexFlowScale(startingNote, scaleType) {
       staveNote.setStyle({ fillStyle: "White", strokeStyle: "white" });
     }
   
-
-
     // Adding the stave note to the voice
     voice.addTickable(staveNote);
   });
@@ -598,6 +596,18 @@ function deletePianoKeyboard() {
   console.log("Delete piano");
   const pianoContainer = document.getElementById('piano-keyboard');
   pianoContainer.innerHTML = '';
+}
+
+
+function toggleMenu(containerId) {
+  var menu = document.getElementById(containerId);
+  menu.classList.toggle("active");
+  if(containerId === "Options"){
+    toggleMenu("Scales");
+    toggleMenu("Key");
+    toggleMenu('reference-container')
+  }
+
 }
 
 

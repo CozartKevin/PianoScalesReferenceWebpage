@@ -15,29 +15,28 @@
 <body>
 
   <button class="button-30" style="display:flex; position:fixed" onclick="toggleMenu('Options')"><h3>Options:</h3></button>
-  <input type="checkbox" id="dark-mode-toggle" class="theme-checkbox"></button> 
-  <div id="Options" class="Container button-container-options" >
-    
 
-    <div id="scale-container" >
+  <input type="checkbox" id="dark-mode-toggle" class="theme-checkbox"></button> 
+
+<div id="Options" class="Container button-container-options" >
+
+<div id="scale-container" >
   <button class="button-30" onclick="toggleMenu('Scales')"> <h4> Scales: </h4></button>
   <div id="Scales" class="Container button-container-scale" ></div>
 </div>
 
 <div id="key-container">
   <button class="button-30" onclick="toggleMenu('Key')" ><h4>Keys: </h4></button>
-    
     <div id="Key" class="button-container-key">
     </div>
-  </div>
-  </div>
 </div>
-<div id="vexflow-container" class="container">
-   
-</div>
-    
-<div id="piano-keyboard" class="container keyboard">
 
+</div>
+</div>
+
+<div id="reference-container" class="reference-container" >
+<div id="vexflow-container" class="container"></div>
+<div id="piano-keyboard" class="container keyboard"></div>
 </div>
 
   </body>
@@ -50,19 +49,6 @@
   generateKeyboardAndVexFlow();
 });
 
-function toggleVisibility(containerId) {
-    var container = document.getElementById(containerId);
-    container.style.display = (container.style.display === 'none' || container.style.display === '') ? 'block' : 'none';
-  }
-  function toggleMenu(containerId) {
-    var menu = document.getElementById(containerId);
-    menu.classList.toggle("active");
-    if(containerId === "Options"){
-      toggleMenu("Scales");
-      toggleMenu("Key");
-    }
-
-  }
 
   </script>
 
