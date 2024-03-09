@@ -150,21 +150,15 @@ body {
   visibility: visible;
 }
 
-.button-container-scale {
+.button-container-scale, .button-container-key , .button-container-options {
   display: flex;
   justify-content: left;
+  margin-top: 10px;
   margin-bottom: 20px;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.button-container-key {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 
 .button {
   font-size: 16px;
@@ -189,7 +183,7 @@ body {
   cursor: pointer;
 }
 
-.button-scale.active {
+.button-scale.active, .button-key.active {
   background-color: var(--button-active-background-color);
   color: var(--button-active-color); 
   
@@ -207,20 +201,13 @@ body {
   cursor: pointer;
 }
 
-.button-key.active {
-  background-color: #333;
-  color: #fff;
-}
 
 .button:hover {
   color: var(--button-hover-color);
   background-color: var(--button-hover-bg);
 }
 
-.button.active {
-  background-color: #333;
-  color: #ffffff;
-}
+
 
 /* Original Button code by e-coders on uiverse.io  URL: https://uiverse.io/e-coders/new-shrimp-32 */
 .button-30 {

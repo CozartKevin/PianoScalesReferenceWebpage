@@ -14,17 +14,21 @@
 
 <body>
 
-  <h3>Options:</h3><input type="checkbox" id="dark-mode-toggle" class="theme-checkbox"></button>
-  <h4> Scales: </h4>
-<div id="Scales" class="Container button-container-scale">
+  <button class="button-30" onclick="toggleVisibility('options')"><h3>Options:</h3></button>
+  <input type="checkbox" id="dark-mode-toggle" class="theme-checkbox"></button> 
+  <div id="options" class="Container button-container-options" style="display: none;">
+    
+  <button class="button-30" onclick="toggleVisibility('Scales')"> <h4> Scales: </h4></button>
+<div id="Scales" class="Container button-container-scale" style="display: block;">
 
    
   </div>
-    <h4>Key: </h4>
+  <button class="button-30" onclick="toggleVisibility('Key')" ><h4>Keys: </h4></button>
     
-    <div id="Key" class="button-container-key">
+    <div id="Key" class="button-container-key" style="display: block;">
     </div>
-
+  </div>
+</div>
 <div id="vexflow-container" class="container">
    
 </div>
@@ -40,9 +44,14 @@
     initializeScaleReference();
     document.getElementById('dark-mode-toggle').addEventListener('click', function() {
   document.body.classList.toggle('dark-mode');
-
   generateKeyboardAndVexFlow();
 });
+
+function toggleVisibility(containerId) {
+    var container = document.getElementById(containerId);
+    container.style.display = (container.style.display === 'none' || container.style.display === '') ? 'block' : 'none';
+  }
+
   </script>
 
 </html>
