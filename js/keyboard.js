@@ -86,7 +86,6 @@ function generatePianoKeyboard(startingNote, scaleType) {
   }
 
 }
-
 /**
  * Highlight Scale Function Place Fingerings.
  * Function to highlight keys on the piano keyboard and place fingerings.
@@ -142,6 +141,7 @@ function generateScaleButtons() {
     button.id = `${scale}ScaleButton`;
     button.className = 'button-scale';
     button.textContent = scale;
+    button.classList.add("button-30");
     button.onclick = () => handleScaleButtonClick(scale);
 
     // Append the button to the container
@@ -184,6 +184,7 @@ function generateKeyButtons() {
     // Set the button properties
     button.id = `${key}KeyButton`;
     button.className = 'button-key';
+    button.classList.add("button-30");
 
     // Concatenate note names into the same button with '\'
     if (nextKey && noteMap[key] === noteMap[nextKey]) {
@@ -252,8 +253,8 @@ function generateVexFlowScale(startingNote, scaleType) {
 
   // VexFlow setup
   const renderer = new Vex.Flow.Renderer(vexFlowContainer, Vex.Flow.Renderer.Backends.SVG);
-  
-  renderer.resize(720,300);
+
+
   const context = renderer.getContext();
 
   context.setFont('Arial', 10);
@@ -261,12 +262,19 @@ function generateVexFlowScale(startingNote, scaleType) {
   // Create a stave of width 400 at position 10, 40 with treble clef
   const stave = new Vex.Flow.Stave(1, 30, 550);
   stave.addClef('treble');
-
+  if(document.body.classList.contains('dark-mode')){
+    
+  }
+ 
   // Connect stave to the rendering context and draw
   stave.setContext(context).draw();
 
+  
+
+
   // Create a voice and add dynamically generated notes
   const voice = new Vex.Flow.Voice({ num_beats: convertedScaleNotes.length, beat_value: 4 });
+
 
   convertedScaleNotes.forEach(note => {
     const staveNote = new Vex.Flow.StaveNote({
@@ -278,17 +286,23 @@ function generateVexFlowScale(startingNote, scaleType) {
       staveNote.addModifier(new Accidental('#'));
     }
 
+    if(document.body.classList.contains('dark-mode')){
+      staveNote.setStyle({ fillStyle: "White", strokeStyle: "white" });
+    }
+  
     // Adding the stave note to the voice
     voice.addTickable(staveNote);
   });
 
   // Format and render the voice
-  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 500);
+  const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 350);
+
   voice.draw(context, stave, formatter);
 
   // Render
+  renderer.resize(500, 200);
+  renderer.getContext().scale(1.25, 1.25); // Adjust scale as needed
 
-  renderer.getContext().scale(1.25,1.25); // Adjust scale as needed
 }
 
 
@@ -682,6 +696,20 @@ function deletePianoKeyboard() {
   const pianoContainer = document.getElementById('piano-keyboard');
   pianoContainer.innerHTML = '';
 }
+
+
+function toggleMenu(containerId) {
+  var menu = document.getElementById(containerId);
+  menu.classList.toggle("active");
+  if(containerId === "Options"){
+    toggleMenu("Scales");
+    toggleMenu("Key");
+    toggleMenu('reference-container')
+  }
+
+}
+
+
 
 /*******************************
 OBJECTS
