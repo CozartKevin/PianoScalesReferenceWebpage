@@ -1,0 +1,66 @@
+const commonLeftHand1Oct = [5,4,3,2,1,3,2,1];
+const commonRightHand1Oct = [1,2,3,1,2,3,4,5]; 
+
+const scaleFingerings = {
+    'C': {
+        major: { leftHand: [[1, 2, 3, 1, 2, 3, 4], [1, 2, 3, 1, 2, 3, 4]],
+                 rightHand: [[4, 3, 2, 1, 3, 2, 1], [4, 3, 2, 1, 3, 2, 1]]
+        },
+        naturalMinor: { leftHand: [[1, 2, 3, 1, 2, 3, 4], [1, 2, 3, 1, 2, 3, 4]],
+                        rightHand: [[4, 3, 2, 1, 3, 2, 1], [4, 3, 2, 1, 3, 2, 1]]
+        },
+        harmonicMinor: { leftHand: [[1, 2, 3, 1, 2, 3, 4], [1, 2, 3, 1, 2, 3, 4]],
+                         rightHand: [[4, 3, 2, 1, 3, 2, 1], [4, 3, 2, 1, 3, 2, 1]]
+        },
+        melodicMinor: { leftHand: [[1, 2, 3, 1, 2, 3, 4], [1, 2, 3, 1, 2, 3, 4]],
+                        rightHand: [[4, 3, 2, 1, 3, 2, 1], [4, 3, 2, 1, 3, 2, 1]]
+        },
+        dorian: { leftHand: [], rightHand: [] },
+        phrygian: { leftHand: [], rightHand: [] },
+        lydian: { leftHand: [], rightHand: [] },
+        mixolydian: { leftHand: [], rightHand: [] },
+        locrian: { leftHand: [], rightHand: [] },
+        pentatonicMajor: { leftHand: [], rightHand: [] },
+        pentatonicMinor: { leftHand: [], rightHand: [] },
+        blues: { leftHand: [], rightHand: [] },
+        wholeTone: { leftHand: [], rightHand: [] },
+        chromatic: { leftHand: [], rightHand: [] },
+        augmented: { leftHand: [], rightHand: [] },
+        diminished: { leftHand: [], rightHand: [] },
+        prometheus: { leftHand: [], rightHand: [] },
+        tritone: { leftHand: [], rightHand: [] },
+        enigmatic: { leftHand: [], rightHand: [] },
+        doubleHarmonic: { leftHand: [], rightHand: [] },
+        neapolitanMajor: { leftHand: [], rightHand: [] },
+        neapolitanMinor: { leftHand: [], rightHand: [] },
+        majorBlues: { leftHand: [], rightHand: [] },
+        minorBlues: { leftHand: [], rightHand: [] },
+        exotic: { leftHand: [], rightHand: [] }
+    },
+    'C#': {
+        major: { leftHand: [], rightHand: [] },
+        naturalMinor: { leftHand: [], rightHand: [] },
+        harmonicMinor: { leftHand: [], rightHand: [] },
+        melodicMinor: { leftHand: [], rightHand: [] },
+        dorian: { leftHand: [], rightHand: [] },
+        phrygian: { leftHand: [], rightHand: [] },
+        lydian: { leftHand: [], rightHand: [] },
+        mixolydian: { leftHand: [], rightHand: [] },
+        locrian: { leftHand: [], rightHand: [] },
+        pentatonicMajor: { leftHand: [], rightHand: [] },
+        pentatonicMinor: { leftHand: [], rightHand: [] },
+        blues: { leftHand: [], rightHand: [] },
+        wholeTone: { leftHand: [], rightHand: [] },
+        chromatic: { leftHand: [], rightHand: [] },
+        augmented: { leftHand: [], rightHand: [] },
+        diminished: { leftHand: [], rightHand: [] },
+        prometheus: { leftHand: [], rightHand: [] },
+        tritone: { leftHand: [], rightHand: [] },
+        enigmatic: { leftHand: [], rightHand: [] },
+        doubleHarmonic: { leftHand: [], rightHand: [] },
+        neapolitanMajor: { leftHand: [], rightHand: [] },
+        neapolitanMinor: { leftHand: [], rightHand: [] },
+        majorBlues: { leftHand: [], rightHand: [] },
+        minorBlues: { leftHand: [], rightHand: [] },
+        exotic: { leftHand: [], rightHand: [] }
+    },
